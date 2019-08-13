@@ -1,0 +1,21 @@
+service: serverless-graphql
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+#  - serverless-sam
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-east-1
+
+functions:
+  graphql:
+    handler: lambda.handler
+    events:
+      - http:
+          path: graphql
+          method: any
+          cors: true
