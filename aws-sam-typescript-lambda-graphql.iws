@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b66a0b1d-394c-4cfb-8f12-3417ffa2b6a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/postgresdb/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/postgresdb/docker/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.iws" beforeDir="false" afterPath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresdb/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/postgresdb/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template.yml" beforeDir="false" afterPath="$PROJECT_DIR$/template.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -107,7 +104,7 @@
       <option name="presentableId" value="Default" />
       <updated>1565621702852</updated>
       <workItem from="1565621704396" duration="1188000" />
-      <workItem from="1565623290854" duration="10422000" />
+      <workItem from="1565623290854" duration="10801000" />
     </task>
     <servers />
   </component>
