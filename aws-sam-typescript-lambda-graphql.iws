@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b66a0b1d-394c-4cfb-8f12-3417ffa2b6a7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.iws" beforeDir="false" afterPath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/postgresdb/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/postgresdb/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template.yml" beforeDir="false" afterPath="$PROJECT_DIR$/template.yml" afterDir="false" />
@@ -105,7 +106,7 @@
       <option name="presentableId" value="Default" />
       <updated>1565621702852</updated>
       <workItem from="1565621704396" duration="1188000" />
-      <workItem from="1565623290854" duration="11406000" />
+      <workItem from="1565623290854" duration="12766000" />
     </task>
     <servers />
   </component>
