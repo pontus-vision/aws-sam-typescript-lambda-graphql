@@ -6,6 +6,8 @@ services:
     hostname: postgres
     restart: on-failure
     container_name: postgres
+    environment:
+      POSTGRES_PASSWORD_FILE=/run/secrets/POSTGRES_PASSWORD_FILE
     ports:
       - 5432:5432
     networks:
@@ -13,3 +15,8 @@ services:
 
 networks:
   graphql:
+
+
+secrets:
+  POSTGRES_PASSWORD_FILE:
+    file: secrets/POSTGRES_PASSWORD_FILE
