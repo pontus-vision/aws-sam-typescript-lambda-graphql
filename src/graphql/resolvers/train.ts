@@ -6,7 +6,7 @@ const resolveFunctions = {
   Query: {
     train(_, args: QueryTrainArgs, context: IAppContext): Train[] {
       const trainsModel: TrainsService = context.trainsService
-
+      
       return trainsModel.getTrains(args.name)
     }
   }

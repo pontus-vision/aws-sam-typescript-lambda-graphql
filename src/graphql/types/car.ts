@@ -2,6 +2,7 @@ const schema = `
 type Car {
  _id : String
  name: String
+ make: String
 }
 
 # the schema allows the following query:

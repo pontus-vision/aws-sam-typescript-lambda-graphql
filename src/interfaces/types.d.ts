@@ -21,7 +21,7 @@ export type Mutation = {
 
 export type MutationUpdateCarNameArgs = {
   _id: Scalars["String"];
-  newName: Scalars["String"];
+  name: Scalars["String"];
 };
 
 export type Query = {
@@ -32,6 +32,8 @@ export type Query = {
 
 export type QueryCarArgs = {
   name?: Maybe<Scalars["String"]>;
+  _id?: Maybe<Scalars["String"]>;
+  make?: Maybe<Scalars["String"]>;
 };
 
 export type QueryTrainArgs = {

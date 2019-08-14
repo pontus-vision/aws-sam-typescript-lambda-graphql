@@ -1,6 +1,6 @@
 CREATE SCHEMA VEHICLES;
--- TRAIN
-CREATE TABLE VEHICLES.TRAIN (TRAIN_id varchar(15) PRIMARY KEY, event_id serial, meta jsonb, search jsonb, domain jsonb);
+-- TRAINdomain
+CREATE TABLE VEHICLES.TRAIN (TRAIN_id varchar(15) PRIMARY KEY, event_id serial, meta jsonb, search jsonb,  jsonb);
 CREATE INDEX TRAIN_META on VEHICLES.TRAIN USING gin(meta);
 CREATE INDEX TRAIN_DOMAIN on VEHICLES.TRAIN USING gin(domain);
 CREATE INDEX TRAIN_SEARCH on VEHICLES.TRAIN USING gin(search);

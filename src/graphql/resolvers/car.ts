@@ -1,5 +1,4 @@
-import {QueryCarArgs, Car, MutationUpdateCarNameArgs} from '../../interfaces/types'
-import {CarsService} from '../../services/cars/CarsService'
+import {Car, MutationUpdateCarNameArgs, QueryCarArgs} from '../../interfaces/types'
 import {IAppContext} from '../../interfaces/IAppContext'
 import {SQLService} from "@src/services/sql/SQLService";
 
@@ -10,7 +9,7 @@ const resolveFunctions = {
       const sqlService: SQLService = context.sqlService;
       if (args.name){
         return sqlService
-          .runQuery("SELECT * FROM CARS WHERE name=$1", [args.name])
+          .runQuery('SELECT search FROM VEHICLES.CARS WHERE search @> ' + JSON.stringify(args), [])
           .then(res => {
             console.log(res.rows[0]);
             // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
@@ -20,10 +19,9 @@ const resolveFunctions = {
       }
       else {
         return sqlService
-          .runQuery("SELECT * FROM CARS", [])
+          .runQuery("SELECT search FROM VEHICLES.CARS", [])
           .then(res => {
             console.log(res.rows[0]);
-            // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
             return res.rows;
           })
           .catch(e => console.error(e.stack))
@@ -36,9 +34,22 @@ const resolveFunctions = {
 
   Mutation: {
     updateCarName(_, args: MutationUpdateCarNameArgs, context: IAppContext): Promise<Car> {
-      const carsService: CarsService = context.carsService
+  
+      const sqlService: SQLService = context.sqlService;
+  
+      return sqlService
+        .runQuery('UPDATE VEHICLES.CARS SET search = ' + JSON.stringify(args), [])
+        .then(res => {
+          console.log(res.rows[0]);
+          // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+          return res.rows;
+        })
+        .catch(e => console.error(e.stack))
+  
+  
+      // const carsService: CarsService = context.carsService
 
-      return carsService.updateCarName(args._id, args.newName)
+      // return carsService.updateCarName(args._id, args.newName)
     }
   }
 }
