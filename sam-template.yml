@@ -10,12 +10,17 @@ Resources:
       CodeUri: >-
         .
       MemorySize: 128
-      Timeout: 3
+      Timeout: 300
       Environment:
         Variables:
           NAME: tom
           GRAPHQL_ENDPOINT: /graphql
           IS_OFFLINE: true
+          PGUSER: postgres
+          PGHOST: postgres
+          PGPASSWORD: passw0rd
+          PGDATABASE: VEHICLES
+          PGPORT: 5432
       Events:
         Event1:
           Type: Api

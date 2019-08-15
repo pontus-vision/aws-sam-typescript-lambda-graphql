@@ -9,7 +9,7 @@ const resolveFunctions = {
       if (args.name) {
         return sqlService
           .runQuery(
-            "SELECT search FROM VEHICLES.CAR WHERE search @> " +
+            "SELECT search FROM VEHICLES.TRAIN WHERE search @> " +
               JSON.stringify(args),
             []
           )
@@ -22,7 +22,7 @@ const resolveFunctions = {
           .catch(e => console.error(e.stack));
       } else {
         return sqlService
-          .runQuery("SELECT search FROM VEHICLES.CAR", [])
+          .runQuery("SELECT search FROM VEHICLES.TRAIN", [])
           .then(res => {
             console.log(res.rows[0]);
 

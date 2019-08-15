@@ -3,6 +3,7 @@ services:
 
   postgres:
     build: ./docker
+
     hostname: postgres
     restart: on-failure
     container_name: postgres

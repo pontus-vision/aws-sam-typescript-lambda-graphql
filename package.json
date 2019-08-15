@@ -28,8 +28,8 @@
     "precommit-tslint": "tslint --fix -c tslint.json",
     "precommit-prettier": "prettier --write",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "local-sam-debug": "sam local start-api --port 4000 --docker-network graphql --debug -d 5010",
-    "local-sam": "sam local start-api --port 4000 --docker-network graphql",
+    "local-sam-debug": "sam local start-api --port 4000 --docker-network postgresdb_graphql --debug -d 5010",
+    "local-sam": "sam local start-api --port 4000 --docker-network postgresdb_graphql",
     "deploy": "npm run build && sls deploy"
   },
   "husky": {

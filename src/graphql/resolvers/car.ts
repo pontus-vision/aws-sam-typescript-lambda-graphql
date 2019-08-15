@@ -30,8 +30,10 @@ const resolveFunctions = {
           .runQuery("SELECT search FROM VEHICLES.CAR", [])
           .then(res => {
             console.log(res.rows[0]);
+            console.log(res.rows);
+            console.log(res.rows[0].search);
 
-            return res.rows;
+            return [res.rows[0].search];
           })
           .catch(e => console.error(e.stack));
       }
@@ -49,10 +51,7 @@ const resolveFunctions = {
       const sqlService: SQLService = context.sqlService;
 
       return sqlService
-        .runQuery(
-          "UPDATE VEHICLES.CARS SET search = " + JSON.stringify(args),
-          []
-        )
+        .runQuery("UPDATE VEHICLES.CAR SET search = " + '{"name": "Peter"}', [])
         .then(res => {
           console.log(res.rows[0]);
 

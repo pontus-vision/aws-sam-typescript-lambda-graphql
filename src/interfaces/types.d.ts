@@ -22,7 +22,7 @@ export interface Mutation {
 
 export interface MutationUpdateCarNameArgs {
   _id: Scalars["String"];
-  newName: Scalars["String"];
+  name: Scalars["String"];
 }
 
 export interface Query {
