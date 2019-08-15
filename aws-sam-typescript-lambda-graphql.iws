@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b66a0b1d-394c-4cfb-8f12-3417ffa2b6a7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.iws" beforeDir="false" afterPath="$PROJECT_DIR$/aws-sam-typescript-lambda-graphql.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresdb/docker/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresdb/docker/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/injector.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/injector.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphql/resolvers/car.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/resolvers/car.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphql/resolvers/train.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/resolvers/train.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphql/types/car.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/types/car.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/types.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/types.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/cars/CarsService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/trains/TrainsService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/template.yml" beforeDir="false" afterPath="$PROJECT_DIR$/template.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,6 +30,7 @@
   </component>
   <component name="ProjectId" id="1PKTHpuyVnCTmlz9ZKX7TLiNddO" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -31,6 +41,11 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="C:/Program Files/nodejs/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="ts.external.directory.path" value="C:\work\homeoffice\hmpo\aws-sam-typescript-lambda-graphql\node_modules\typescript\lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\work\homeoffice\hmpo\aws-sam-typescript-lambda-graphql\postgresdb\docker" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -97,7 +112,7 @@
       <option name="presentableId" value="Default" />
       <updated>1565621702852</updated>
       <workItem from="1565621704396" duration="1188000" />
-      <workItem from="1565623290854" duration="4171000" />
+      <workItem from="1565623290854" duration="17128000" />
     </task>
     <servers />
   </component>
@@ -127,7 +142,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/graphql/resolvers/car.ts</url>
-          <line>9</line>
+          <line>8</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

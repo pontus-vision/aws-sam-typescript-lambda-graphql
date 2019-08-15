@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+
+  postgres:
+    build: ./docker
+
+    hostname: postgres
+    restart: on-failure
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/POSTGRES_PASSWORD_FILE
+      - POSTGRES_DB=VEHICLES
+      - POSTGRES_USER=postgres
+    secrets:
+      - POSTGRES_PASSWORD_FILE
+    ports:
+      - 5432:5432
+    networks:
+      - graphql
+
+
+secrets:
+  POSTGRES_PASSWORD_FILE:
+    file: secrets/POSTGRES_PASSWORD_FILE
+
+networks:
+  graphql:
+

@@ -1,45 +1,46 @@
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
+export interface Scalars {
   ID: string;
   String: string;
   Boolean: boolean;
   Int: number;
   Float: number;
-};
+}
 
-export type Car = {
+export interface Car {
   __typename?: "Car";
   _id?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
-};
+  make?: Maybe<Scalars["String"]>;
+}
 
-export type Mutation = {
+export interface Mutation {
   __typename?: "Mutation";
   updateCarName?: Maybe<Car>;
-};
+}
 
-export type MutationUpdateCarNameArgs = {
+export interface MutationUpdateCarNameArgs {
   _id: Scalars["String"];
-  newName: Scalars["String"];
-};
+  name: Scalars["String"];
+}
 
-export type Query = {
+export interface Query {
   __typename?: "Query";
   car?: Maybe<Array<Maybe<Car>>>;
   train?: Maybe<Array<Maybe<Train>>>;
-};
+}
 
-export type QueryCarArgs = {
+export interface QueryCarArgs {
   name?: Maybe<Scalars["String"]>;
-};
+}
 
-export type QueryTrainArgs = {
+export interface QueryTrainArgs {
   name?: Maybe<Scalars["String"]>;
-};
+}
 
-export type Train = {
+export interface Train {
   __typename?: "Train";
   _id?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
-};
+}

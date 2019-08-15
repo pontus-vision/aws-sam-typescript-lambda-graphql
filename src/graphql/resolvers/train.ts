@@ -1,15 +1,37 @@
-import {QueryTrainArgs, Train} from '../../interfaces/types'
-import {TrainsService} from '../../services/trains/TrainsService'
-import {IAppContext} from '../../interfaces/IAppContext'
+import { QueryTrainArgs, Train } from "../../interfaces/types";
+import { IAppContext } from "../../interfaces/IAppContext";
+import { SQLService } from "@src/services/sql/SQLService";
 
 const resolveFunctions = {
   Query: {
     train(_, args: QueryTrainArgs, context: IAppContext): Train[] {
-      const trainsModel: TrainsService = context.trainsService
+      const sqlService: SQLService = context.sqlService;
+      if (args.name) {
+        return sqlService
+          .runQuery(
+            "SELECT search FROM VEHICLES.TRAIN WHERE search @> " +
+              JSON.stringify(args),
+            []
+          )
+          .then(res => {
+            console.log(res.rows[0]);
 
-      return trainsModel.getTrains(args.name)
+            // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+            return res.rows;
+          })
+          .catch(e => console.error(e.stack));
+      } else {
+        return sqlService
+          .runQuery("SELECT search FROM VEHICLES.TRAIN", [])
+          .then(res => {
+            console.log(res.rows[0]);
+
+            return res.rows;
+          })
+          .catch(e => console.error(e.stack));
+      }
     }
   }
-}
+};
 
-export default resolveFunctions
+export default resolveFunctions;

@@ -2,6 +2,7 @@ const schema = `
 type Car {
  _id : String
  name: String
+ make: String
 }
 
 # the schema allows the following query:
@@ -10,9 +11,9 @@ type Query {
 }
 
 type Mutation {
-  updateCarName(_id: String!, newName: String!): Car
+  updateCarName(_id: String!, name: String!): Car
 }
 
-`
+`;
 
-export default schema
+export default schema;

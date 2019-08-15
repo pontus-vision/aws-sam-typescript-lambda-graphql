@@ -1,33 +1,41 @@
-import {QueryCarArgs, Car, MutationUpdateCarNameArgs} from '../../interfaces/types'
-import {CarsService} from '../../services/cars/CarsService'
-import {IAppContext} from '../../interfaces/IAppContext'
-import {SQLService} from "@src/services/sql/SQLService";
+import {
+  Car,
+  MutationUpdateCarNameArgs,
+  QueryCarArgs
+} from "../../interfaces/types";
+import { IAppContext } from "../../interfaces/IAppContext";
+import { SQLService } from "@src/services/sql/SQLService";
 
 const resolveFunctions = {
   Query: {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
       // const carsService: CarsService = context.carsService
       const sqlService: SQLService = context.sqlService;
-      if (args.name){
+      if (args.name) {
         return sqlService
-          .runQuery("SELECT * FROM CARS WHERE name=$1", [args.name])
+          .runQuery(
+            "SELECT search FROM VEHICLES.CAR WHERE search @> " +
+              JSON.stringify(args),
+            []
+          )
           .then(res => {
             console.log(res.rows[0]);
+
             // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
             return res.rows;
           })
-          .catch(e => console.error(e.stack))
-      }
-      else {
+          .catch(e => console.error(e.stack));
+      } else {
         return sqlService
-          .runQuery("SELECT * FROM CARS", [])
+          .runQuery("SELECT search FROM VEHICLES.CAR", [])
           .then(res => {
             console.log(res.rows[0]);
-            // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
-            return res.rows;
+            console.log(res.rows);
+            console.log(res.rows[0].search);
+
+            return [res.rows[0].search];
           })
-          .catch(e => console.error(e.stack))
-  
+          .catch(e => console.error(e.stack));
       }
 
       // return carsService.getCars(args.name)
@@ -35,12 +43,28 @@ const resolveFunctions = {
   },
 
   Mutation: {
-    updateCarName(_, args: MutationUpdateCarNameArgs, context: IAppContext): Promise<Car> {
-      const carsService: CarsService = context.carsService
+    updateCarName(
+      _,
+      args: MutationUpdateCarNameArgs,
+      context: IAppContext
+    ): Promise<Car> {
+      const sqlService: SQLService = context.sqlService;
 
-      return carsService.updateCarName(args._id, args.newName)
+      return sqlService
+        .runQuery("UPDATE VEHICLES.CAR SET search = " + '{"name": "Peter"}', [])
+        .then(res => {
+          console.log(res.rows[0]);
+
+          // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+          return res.rows;
+        })
+        .catch(e => console.error(e.stack));
+
+      // const carsService: CarsService = context.carsService
+
+      // return carsService.updateCarName(args._id, args.newName)
     }
   }
-}
+};
 
-export default resolveFunctions
+export default resolveFunctions;
