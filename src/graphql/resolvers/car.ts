@@ -1,22 +1,19 @@
 import {
-  Car,
   MutationUpdateCarArgs,
-  QueryCarArgs
+  QueryCarArgs,
+  Car
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
+import { Query } from "@src/core/constants/Constants";
+import * as format from "../../../node_modules/string-format/index.js";
 
 const resolveFunctions = {
   Query: {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
-      const sqlService: SQLService = context.sqlService;
       if (args.name) {
-        return sqlService
-          .runQuery(
-            "SELECT search::jsonb FROM VEHICLES.CAR WHERE search @> " +
-              JSON.stringify(args),
-            []
-          )
+        return context.sqlService
+          .runQuery(Query.SEARCH_CAR + JSON.stringify(args), [])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log(result);
@@ -25,8 +22,8 @@ const resolveFunctions = {
           })
           .catch(e => console.error(e.stack));
       } else {
-        return sqlService
-          .runQuery("SELECT search::jsonb FROM VEHICLES.CAR", [])
+        return context.sqlService
+          .runQuery(Query.SEARCH_CARS, [])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log(result);
@@ -49,21 +46,7 @@ const resolveFunctions = {
       const insert = JSON.stringify(args);
       const id = args._id;
       const name = args.name;
-      const search = {
-        name
-      };
-      const query =
-        "INSERT INTO VEHICLES.CAR(_id, search) values ('" +
-        id +
-        "','" +
-        JSON.stringify(search) +
-        "') ON CONFLICT (_id) DO UPDATE set _id = '" +
-        id +
-        "', search = '" +
-        JSON.stringify(search) +
-        "'";
-      console.log("Args is: " + JSON.stringify(args));
-      console.log("Query is: " + query);
+      const query = format(Query.MUTATE_CAR, id, insert, id, insert);
 
       return sqlService
         .runQuery(query, [])
