@@ -10,17 +10,16 @@ export interface Scalars {
 
 export interface Car {
   __typename?: "Car";
-  _id?: Maybe<Scalars["String"]>;
+  _id: Scalars["String"];
   name?: Maybe<Scalars["String"]>;
-  make?: Maybe<Scalars["String"]>;
 }
 
 export interface Mutation {
   __typename?: "Mutation";
-  updateCarName?: Maybe<Car>;
+  updateCar?: Maybe<Car>;
 }
 
-export interface MutationUpdateCarNameArgs {
+export interface MutationUpdateCarArgs {
   _id: Scalars["String"];
   name: Scalars["String"];
 }
@@ -41,6 +40,5 @@ export interface QueryTrainArgs {
 
 export interface Train {
   __typename?: "Train";
-  _id?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
 }
