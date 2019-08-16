@@ -18,9 +18,7 @@ const resolveFunctions = {
             []
           )
           .then(res => {
-            // const result = res.rows.map( function(a) {
-            //     return a.search;
-            // })
+            const result = res.rows.map(row => row.search);
             console.log(result);
 
             return result;
@@ -30,9 +28,7 @@ const resolveFunctions = {
         return sqlService
           .runQuery("SELECT search::jsonb FROM VEHICLES.CAR", [])
           .then(res => {
-            // const result = res.rows.map(function(a){
-            //     return a.search;
-            // })
+            const result = res.rows.map(row => row.search);
             console.log(result);
 
             return result;
@@ -65,7 +61,6 @@ const resolveFunctions = {
       const search = {
         name
       };
-      // INSERT INTO VEHICLES.CAR(_id, search) values ('3', '{"name":"Krishna"}') ON CONFLICT (_id) DO UPDATE set _id= '3', search = '{"name":"Krishna"}';
       const query =
         "INSERT INTO VEHICLES.CAR(_id, search) values ('" +
         id +
