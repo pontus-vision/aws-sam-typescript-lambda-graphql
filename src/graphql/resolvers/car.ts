@@ -35,16 +35,6 @@ const resolveFunctions = {
           })
           .catch(e => console.error(e.stack));
       }
-
-      // if (err) throw err;
-      // // if connection is successful
-      // con.query("SELECT * FROM students", function (err, result, fields) {
-      //     // if any error while executing above query, throw error
-      //     if (err) throw err;
-      //     // if there is no error, you have the result
-      //     console.log(result);
-      // });
-      // return carsService.getCars(args.name)
     }
   },
 
@@ -52,7 +42,8 @@ const resolveFunctions = {
     updateCar(
       _,
       args: MutationUpdateCarArgs,
-      context: IAppContext
+      context: IAppContext,
+      info: any
     ): Promise<Car> {
       const sqlService: SQLService = context.sqlService;
       const insert = JSON.stringify(args);
@@ -77,9 +68,9 @@ const resolveFunctions = {
       return sqlService
         .runQuery(query, [])
         .then(res => {
-          console.log("Response is: " + JSON.stringify(search));
+          const response = JSON.parse('{"status": " 200 "}');
 
-          return JSON.stringify(search);
+          return response;
         })
         .catch(e => console.error(e.stack));
     }
