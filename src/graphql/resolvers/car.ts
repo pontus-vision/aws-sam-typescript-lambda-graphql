@@ -1,6 +1,6 @@
 import {
   Car,
-  MutationUpdateCarNameArgs,
+  MutationUpdateCarArgs,
   QueryCarArgs
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
@@ -9,60 +9,70 @@ import { SQLService } from "@src/services/sql/SQLService";
 const resolveFunctions = {
   Query: {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
-      // const carsService: CarsService = context.carsService
       const sqlService: SQLService = context.sqlService;
       if (args.name) {
         return sqlService
           .runQuery(
-            "SELECT search FROM VEHICLES.CAR WHERE search @> " +
+            "SELECT search::jsonb FROM VEHICLES.CAR WHERE search @> " +
               JSON.stringify(args),
             []
           )
           .then(res => {
-            console.log(res.rows[0]);
+            const result = res.rows.map(row => row.search);
+            console.log(result);
 
-            // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
-            return res.rows;
+            return result;
           })
           .catch(e => console.error(e.stack));
       } else {
         return sqlService
-          .runQuery("SELECT search FROM VEHICLES.CAR", [])
+          .runQuery("SELECT search::jsonb FROM VEHICLES.CAR", [])
           .then(res => {
-            console.log(res.rows[0]);
-            console.log(res.rows);
-            console.log(res.rows[0].search);
+            const result = res.rows.map(row => row.search);
+            console.log(result);
 
-            return [res.rows[0].search];
+            return result;
           })
           .catch(e => console.error(e.stack));
       }
-
-      // return carsService.getCars(args.name)
     }
   },
 
   Mutation: {
-    updateCarName(
+    updateCar(
       _,
-      args: MutationUpdateCarNameArgs,
-      context: IAppContext
+      args: MutationUpdateCarArgs,
+      context: IAppContext,
+      info: any
     ): Promise<Car> {
       const sqlService: SQLService = context.sqlService;
+      const insert = JSON.stringify(args);
+      const id = args._id;
+      const name = args.name;
+      const search = {
+        name
+      };
+      const query =
+        "INSERT INTO VEHICLES.CAR(_id, search) values ('" +
+        id +
+        "','" +
+        JSON.stringify(search) +
+        "') ON CONFLICT (_id) DO UPDATE set _id = '" +
+        id +
+        "', search = '" +
+        JSON.stringify(search) +
+        "'";
+      console.log("Args is: " + JSON.stringify(args));
+      console.log("Query is: " + query);
 
       return sqlService
-        .runQuery("UPDATE VEHICLES.CAR SET search = " + '{"name": "Peter"}', [])
+        .runQuery(query, [])
         .then(res => {
-          console.log(res.rows[0]);
+          const response = JSON.parse('{"status": " 200 "}');
 
-          // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
-          return res.rows;
+          return response;
         })
         .catch(e => console.error(e.stack));
-
-      // const carsService: CarsService = context.carsService
-
-      // return carsService.updateCarName(args._id, args.newName)
     }
   }
 };

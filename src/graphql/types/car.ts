@@ -1,8 +1,11 @@
 const schema = `
 type Car {
- _id : String
- name: String
- make: String
+_id: String!
+ name : String
+}
+
+type Status {
+ status : String
 }
 
 # the schema allows the following query:
@@ -11,7 +14,7 @@ type Query {
 }
 
 type Mutation {
-  updateCarName(_id: String!, name: String!): Car
+  updateCar(_id: String, name: String): Status
 }
 
 `;
