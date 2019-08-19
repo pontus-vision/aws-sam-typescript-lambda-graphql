@@ -7,7 +7,12 @@ module.exports = {
   verbose: true,
   "roots": [
     "./src",
-    "./dist"
+    "./dist",
+    "./node_modules"
+  ],
+  "moduleDirectories": [
+    "node_modules",
+    "src"
   ],
   moduleFileExtensions: ['js'],
 };

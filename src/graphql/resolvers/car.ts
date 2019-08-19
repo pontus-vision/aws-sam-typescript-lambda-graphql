@@ -5,8 +5,9 @@ import {
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
-import { Query } from "@src/core/constants/Constants";
-import * as format from "../../../node_modules/string-format/index.js";
+import { Query } from "../../../src/core/constants/Query";
+import * as format from "string-format/index.js";
+import { Injector } from "injection-js";
 
 const resolveFunctions = {
   Query: {
@@ -60,6 +61,8 @@ const resolveFunctions = {
   }
 };
 
-const add = (a, b) => a + b;
+export function add(a, b) {
+  return a + b;
+}
 
 export default resolveFunctions;
