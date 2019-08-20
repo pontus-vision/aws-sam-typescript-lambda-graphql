@@ -37,6 +37,7 @@ export interface Query {
 }
 
 export interface QueryCarArgs {
+  _id?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
 }
 

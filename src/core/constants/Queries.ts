@@ -7,8 +7,11 @@ export class Queries {
 
   public static readonly SEARCH_CARS = "SELECT search::jsonb FROM VEHICLES.Car";
 
-  public static readonly SEARCH_CAR =
+  public static readonly SEARCH_CAR_BY_NAME =
     "SELECT search::jsonb FROM VEHICLES.Car WHERE search->> 'name' = $1";
+
+  public static readonly SEARCH_CAR =
+    "SELECT search::jsonb FROM VEHICLES.Car WHERE search @> $1";
 
   public static readonly MUTATE_TRAIN =
     "INSERT INTO VEHICLES.Train(_id, search) values ($1, $2) ON CONFLICT (_id) DO UPDATE set _id = $3, search =$4";
