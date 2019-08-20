@@ -6,14 +6,14 @@ import {
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
 import { Queries } from "../../core/constants/Queries";
-import * as format from "string-format/index.js";
 
 const resolveFunctions = {
   Query: {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
+      console.log("Args: " + JSON.stringify(args));
       if (args.name) {
         return context.sqlService
-          .runQuery(Queries.SEARCH_CAR + JSON.stringify(args), [])
+          .runQuery(Queries.SEARCH_CAR, [args.name])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log("Filtered query result: " + result);
@@ -46,10 +46,9 @@ const resolveFunctions = {
       const insert = JSON.stringify(args);
       const id = args._id;
       const name = args.name;
-      const query = format(Queries.MUTATE_CAR, id, insert, id, insert);
 
       return sqlService
-        .runQuery(query, [])
+        .runQuery(Queries.MUTATE_CAR, [id, insert, id, insert])
         .then(res => {
           const response = JSON.parse('{"status": " 200 "}');
 

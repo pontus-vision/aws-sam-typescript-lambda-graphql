@@ -1,6 +1,6 @@
 import schema from "../src/graphql/schema/schema";
 import { graphql } from "graphql";
-import { MockSQLService } from "../src/services/sql/MockSQLService";
+import { MockSQLService } from "./services/sql/MockSQLService";
 
 const allCarsNamesTestCase = {
   id: "all cars names",

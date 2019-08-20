@@ -6,14 +6,13 @@ import {
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
 import { Queries } from "../../core/constants/Queries";
-import * as format from "string-format/index.js";
 
 const resolveFunctions = {
   Query: {
     train(_, args: QueryTrainArgs, context: IAppContext): Promise<Train[]> {
       if (args.name) {
         return context.sqlService
-          .runQuery(Queries.SEARCH_TRAIN + JSON.stringify(args), [])
+          .runQuery(Queries.SEARCH_TRAIN, [args.name])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log(result);
@@ -45,10 +44,9 @@ const resolveFunctions = {
       const insert = JSON.stringify(args);
       const id = args._id;
       const name = args.name;
-      const query = format(Queries.MUTATE_TRAIN, id, insert, id, insert);
 
       return context.sqlService
-        .runQuery(query, [])
+        .runQuery(Queries.MUTATE_TRAIN, [id, insert, id, insert])
         .then(res => {
           const response = JSON.parse('{"status": " 200 "}');
 
