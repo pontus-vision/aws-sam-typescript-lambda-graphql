@@ -12,6 +12,7 @@ export interface Car {
   __typename?: "Car";
   _id: Scalars["String"];
   name?: Maybe<Scalars["String"]>;
+  steering?: Maybe<Scalars["String"]>;
 }
 
 export interface Mutation {
