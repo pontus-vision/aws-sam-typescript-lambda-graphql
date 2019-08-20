@@ -110,7 +110,68 @@ Technologies
 + TypeScript - https://www.typescriptlang.org/
 + PostgresQL Database with JsonB: https://www.postgresql.org/docs/9.4/datatype-json.html
 + Nodejs - https://nodejs.org/en/docs/guides/
-
-![alt text](https://github.com/pontus-vision/aws-sam-typescript-lambda-graphql/blob/jira-20/code_structure_tree.png)
-
+```
+├── LICENSE
+├── README.md
+├── apollo-typed-lambda.iml
+├── apollo-typed-lambda.ipr
+├── apollo-typed-lambda.iws
+├── aws-sam-typescript-lambda-graphql.iml
+├── aws-sam-typescript-lambda-graphql.ipr
+├── aws-sam-typescript-lambda-graphql.iws
+├── code_structure_tree.png
+├── codegen.yml
+├── jest.config.js
+├── lambda.js
+├── package-lock.json
+├── package.json
+├── postgresdb
+│   ├── docker
+│   │   ├── Dockerfile
+│   │   └── init.sql
+│   ├── docker-compose.yml
+│   └── secrets
+│       └── POSTGRES_PASSWORD_FILE
+├── renovate.json
+├── sam-template.yml
+├── serverless.yml
+├── src
+│   ├── aws-wrapper.ts
+│   ├── context.ts
+│   ├── core
+│   │   ├── config
+│   │   │   ├── AbstractSetting.ts
+│   │   │   ├── IConfig.ts
+│   │   │   └── Setting.ts
+│   │   ├── constants
+│   │   │   └── Queries.ts
+│   │   ├── injector.ts
+│   │   └── logger
+│   │       ├── AbstractLogger.ts
+│   │       └── Logger.ts
+│   ├── graphql
+│   │   ├── resolvers
+│   │   │   ├── car.ts
+│   │   │   └── train.ts
+│   │   ├── schema
+│   │   │   ├── genereator-schema.ts
+│   │   │   └── schema.ts
+│   │   └── types
+│   │       ├── car.ts
+│   │       └── train.ts
+│   ├── interfaces
+│   │   ├── IAppContext.ts
+│   │   └── types.d.ts
+│   ├── server.ts
+│   └── services
+│       └── sql
+│           └── SQLService.ts
+├── template.yml -> sam-template.yml
+├── test
+│   ├── car.test.ts
+│   └── services
+│       └── sql
+│           └── MockSQLService.ts
+├── tsconfig.json
+└── tslint.json```
 
