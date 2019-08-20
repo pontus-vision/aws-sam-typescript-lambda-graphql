@@ -2,10 +2,10 @@ import {
   MutationUpdateCarArgs,
   QueryCarArgs,
   Car
-} from "@src/interfaces/types";
-import { IAppContext } from "@src/interfaces/IAppContext";
+} from "../../interfaces/types";
+import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
-import { Queries } from "@src/core/constants/Queries";
+import { Queries } from "../../core/constants/Queries";
 import * as format from "string-format/index.js";
 
 const resolveFunctions = {
