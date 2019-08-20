@@ -94,6 +94,14 @@ After completing this Guide/Documentation you will:
 + Open Intellij and Configure NodeJS Debugger against port above 5010
 + Select your breakpoints, Submit a Query in the Playground on the Webui and trigger debug
 
+#Step 6: Testing with Jest
++ Jest is already added as a dev dependency in package.json, so running npm install as part of Step 4 will have installed it.
++ Look at https://jestjs.io/docs/en/getting-started for more information setting up jest.
++ To execute test, run `npm run test` from the command line.
++ We have added tests for GraphQL queries and Mutations, these can be triggered by executng the command above.
++ As part of out test, we Mock interactions with the database via the MockSQLService class.
++ We then verify responses and spy on database calls to ensure correct calls are made and with the correct parameters.
+
 
 #Code Structure
 Technologies
@@ -102,5 +110,7 @@ Technologies
 + TypeScript - https://www.typescriptlang.org/
 + PostgresQL Database with JsonB: https://www.postgresql.org/docs/9.4/datatype-json.html
 + Nodejs - https://nodejs.org/en/docs/guides/
+
+![alt text](https://github.com/pontus-vision/aws-sam-typescript-lambda-graphql/blob/jira-20/code_structure_tree.png)
 
 
