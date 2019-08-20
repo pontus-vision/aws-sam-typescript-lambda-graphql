@@ -6,7 +6,7 @@ import {
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
-import { Query } from "../../../src/core/constants/Query";
+import { Queries } from "../../core/constants/Queries";
 import * as format from "string-format/index.js";
 
 const resolveFunctions = {
@@ -14,7 +14,7 @@ const resolveFunctions = {
     train(_, args: QueryTrainArgs, context: IAppContext): Promise<Train[]> {
       if (args.name) {
         return context.sqlService
-          .runQuery(Query.SEARCH_TRAIN + JSON.stringify(args), [])
+          .runQuery(Queries.SEARCH_TRAIN + JSON.stringify(args), [])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log(result);
@@ -24,7 +24,7 @@ const resolveFunctions = {
           .catch(e => console.error(e.stack));
       } else {
         return context.sqlService
-          .runQuery(Query.SEARCH_TRAINS, [])
+          .runQuery(Queries.SEARCH_TRAINS, [])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log(result);
@@ -46,7 +46,7 @@ const resolveFunctions = {
       const insert = JSON.stringify(args);
       const id = args._id;
       const name = args.name;
-      const query = format(Query.MUTATE_TRAIN, id, insert, id, insert);
+      const query = format(Queries.MUTATE_TRAIN, id, insert, id, insert);
 
       return context.sqlService
         .runQuery(query, [])

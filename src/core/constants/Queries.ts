@@ -1,4 +1,4 @@
-export class Query {
+export class Queries {
   public static readonly SEARCH_TRAINS =
     "SELECT search::jsonb FROM VEHICLES.Train";
   public static readonly SEARCH_TRAIN =

@@ -5,7 +5,7 @@ import {
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
-import { Query } from "../../../src/core/constants/Query";
+import { Queries } from "../../core/constants/Queries";
 import * as format from "string-format/index.js";
 import { Injector } from "injection-js";
 
@@ -14,17 +14,17 @@ const resolveFunctions = {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
       if (args.name) {
         return context.sqlService
-          .runQuery(Query.SEARCH_CAR + JSON.stringify(args), [])
+          .runQuery(Queries.SEARCH_CAR + JSON.stringify(args), [])
           .then(res => {
             const result = res.rows.map(row => row.search);
-            console.log(result);
+            console.log("Filtered query result: " + result);
 
             return result;
           })
           .catch(e => console.error(e.stack));
       } else {
         return context.sqlService
-          .runQuery(Query.SEARCH_CARS, [])
+          .runQuery(Queries.SEARCH_CARS, [])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log(result);
@@ -47,7 +47,7 @@ const resolveFunctions = {
       const insert = JSON.stringify(args);
       const id = args._id;
       const name = args.name;
-      const query = format(Query.MUTATE_CAR, id, insert, id, insert);
+      const query = format(Queries.MUTATE_CAR, id, insert, id, insert);
 
       return sqlService
         .runQuery(query, [])
@@ -60,9 +60,5 @@ const resolveFunctions = {
     }
   }
 };
-
-export function add(a, b) {
-  return a + b;
-}
 
 export default resolveFunctions;

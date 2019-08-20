@@ -47,7 +47,7 @@
     }
   },
   "_moduleAliases": {
-    "@src": "dist"
+    "@src": "dist/src"
   },
   "keywords": [],
   "author": "",

@@ -28,10 +28,4 @@ export class SQLService {
 
     return SQLService.pool.query(queryText, queryVals);
   }
-
-  // public runNamedQuery(queryText: String, queryVals: String[]): any {
-  //   this.logger.info('Returning SQL Conn ... for Query: ' + queryText + "and values " + queryVals);
-  //   return SQLService.pool
-  //       .query(sql(queryText, queryVals));
-  // }
 }
