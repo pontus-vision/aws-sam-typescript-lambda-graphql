@@ -1,32 +1,28 @@
 import {
-  Car,
   MutationUpdateCarArgs,
-  QueryCarArgs
+  QueryCarArgs,
+  Car
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
+import { Queries } from "../../core/constants/Queries";
 
 const resolveFunctions = {
   Query: {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
-      const sqlService: SQLService = context.sqlService;
-      if (args.name) {
-        return sqlService
-          .runQuery(
-            "SELECT search::jsonb FROM VEHICLES.CAR WHERE search @> " +
-              JSON.stringify(args),
-            []
-          )
+      if (Object.keys(args).length > 0) {
+        return context.sqlService
+          .runQuery(Queries.SEARCH_CAR, [JSON.stringify(args)])
           .then(res => {
             const result = res.rows.map(row => row.search);
-            console.log(result);
+            console.log("Filtered query result: " + result);
 
             return result;
           })
           .catch(e => console.error(e.stack));
       } else {
-        return sqlService
-          .runQuery("SELECT search::jsonb FROM VEHICLES.CAR", [])
+        return context.sqlService
+          .runQuery(Queries.SEARCH_CARS, [])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log(result);
@@ -49,24 +45,9 @@ const resolveFunctions = {
       const insert = JSON.stringify(args);
       const id = args._id;
       const name = args.name;
-      const search = {
-        name
-      };
-      const query =
-        "INSERT INTO VEHICLES.CAR(_id, search) values ('" +
-        id +
-        "','" +
-        JSON.stringify(search) +
-        "') ON CONFLICT (_id) DO UPDATE set _id = '" +
-        id +
-        "', search = '" +
-        JSON.stringify(search) +
-        "'";
-      console.log("Args is: " + JSON.stringify(args));
-      console.log("Query is: " + query);
 
       return sqlService
-        .runQuery(query, [])
+        .runQuery(Queries.MUTATE_CAR, [id, insert, id, insert])
         .then(res => {
           const response = JSON.parse('{"status": " 200 "}');
 

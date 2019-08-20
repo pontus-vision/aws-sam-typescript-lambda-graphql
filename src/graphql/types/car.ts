@@ -10,7 +10,7 @@ type Status {
 
 # the schema allows the following query:
 type Query {
-  car(name: String): [Car]
+  car(_id: String, name: String): [Car]
 }
 
 type Mutation {

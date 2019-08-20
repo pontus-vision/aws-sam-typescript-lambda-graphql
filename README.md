@@ -94,6 +94,14 @@ After completing this Guide/Documentation you will:
 + Open Intellij and Configure NodeJS Debugger against port above 5010
 + Select your breakpoints, Submit a Query in the Playground on the Webui and trigger debug
 
+#Step 6: Testing with Jest
++ Jest is already added as a dev dependency in package.json, so running npm install as part of Step 4 will have installed it.
++ Look at https://jestjs.io/docs/en/getting-started for more information setting up jest.
++ To execute test, run `npm run test` from the command line.
++ We have added tests for GraphQL queries and Mutations, these can be triggered by executng the command above.
++ As part of out test, we Mock interactions with the database via the MockSQLService class.
++ We then verify responses and spy on database calls to ensure correct calls are made and with the correct parameters.
+
 
 #Code Structure
 Technologies
@@ -102,5 +110,68 @@ Technologies
 + TypeScript - https://www.typescriptlang.org/
 + PostgresQL Database with JsonB: https://www.postgresql.org/docs/9.4/datatype-json.html
 + Nodejs - https://nodejs.org/en/docs/guides/
-
+```
+├── LICENSE
+├── README.md
+├── apollo-typed-lambda.iml
+├── apollo-typed-lambda.ipr
+├── apollo-typed-lambda.iws
+├── aws-sam-typescript-lambda-graphql.iml
+├── aws-sam-typescript-lambda-graphql.ipr
+├── aws-sam-typescript-lambda-graphql.iws
+├── code_structure_tree.png
+├── codegen.yml
+├── jest.config.js
+├── lambda.js
+├── package-lock.json
+├── package.json
+├── postgresdb
+│   ├── docker
+│   │   ├── Dockerfile
+│   │   └── init.sql
+│   ├── docker-compose.yml
+│   └── secrets
+│       └── POSTGRES_PASSWORD_FILE
+├── renovate.json
+├── sam-template.yml
+├── serverless.yml
+├── src
+│   ├── aws-wrapper.ts
+│   ├── context.ts
+│   ├── core
+│   │   ├── config
+│   │   │   ├── AbstractSetting.ts
+│   │   │   ├── IConfig.ts
+│   │   │   └── Setting.ts
+│   │   ├── constants
+│   │   │   └── Queries.ts
+│   │   ├── injector.ts
+│   │   └── logger
+│   │       ├── AbstractLogger.ts
+│   │       └── Logger.ts
+│   ├── graphql
+│   │   ├── resolvers
+│   │   │   ├── car.ts
+│   │   │   └── train.ts
+│   │   ├── schema
+│   │   │   ├── genereator-schema.ts
+│   │   │   └── schema.ts
+│   │   └── types
+│   │       ├── car.ts
+│   │       └── train.ts
+│   ├── interfaces
+│   │   ├── IAppContext.ts
+│   │   └── types.d.ts
+│   ├── server.ts
+│   └── services
+│       └── sql
+│           └── SQLService.ts
+├── template.yml -> sam-template.yml
+├── test
+│   ├── car.test.ts
+│   └── services
+│       └── sql
+│           └── MockSQLService.ts
+├── tsconfig.json
+└── tslint.json```
 
