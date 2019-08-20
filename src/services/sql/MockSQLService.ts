@@ -1,5 +1,3 @@
-import { AbstractLogger } from "@src/core/logger/AbstractLogger";
-
 export class MockSQLService {
   public runQuery(queryText: string, queryVals: string[]): any {
     const res = JSON.parse(
