@@ -116,7 +116,7 @@ Technologies
 ```
 ├── LICENSE -- License file
 ├── README.md -- This file
-├── codegen.yml  -- this file has 
+├── codegen.yml  -- this file has the configuration to create the auto-generated types.d.ts file. 
 ├── jest.config.js -- configuration file that defines the behaviour of the Jest Unit Tests.
 ├── lambda.js  -- entry point for the AWS Lambda
 ├── package-lock.json 
