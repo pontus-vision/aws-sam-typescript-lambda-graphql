@@ -33,7 +33,7 @@ After completing this Guide/Documentation you will:
 + Clone Github Project https://github.com/pontus-vision/aws-sam-typescript-lambda-graphql
 + Navigate to postgresdb directory e.g. aws-sam-typescript-lambda-graphql/postgresdb
 + Deploy a dockerised postgres (useful commands below.)
-+ ```
+ ```
   docker-compose up
   
   docker-compose down
@@ -58,7 +58,7 @@ After completing this Guide/Documentation you will:
 + `npm run local-sam`
 + Open your browser and Navigate to http://127.0.0.1:4000/graphq
 + Other commands you can run are in aws-sam-typescript-lambda-graphql/package.json
-+ ```
+ ```
   "build-schema": "rimraf ./dist/graphql/schema/ && find src/graphql/types -iname \"*.ts\" > ts-files.txt && tsc ./src/graphql/schema/genereator-schema.ts --outDir ./dist/graphql/schema/ --lib esnext && tsc @ts-files.txt --outDir ./dist/graphql/types --lib esnext && rimraf ts-files.txt",
   "build-schema:win": "rimraf ./dist/graphql/schema/ && dir /s /b \"src/graphql/types\" | findstr /e .ts > ts-files.txt && tsc ./src/graphql/schema/genereator-schema.ts --outDir ./dist/graphql/schema/ --lib esnext && tsc @ts-files.txt --outDir ./dist/graphql/types --lib esnext && del ts-files.txt",
   "generate-ts": "gql-gen",
