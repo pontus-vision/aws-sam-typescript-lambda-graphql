@@ -33,38 +33,6 @@ const allCarsNamesTestCase = {
   }
 };
 
-const selectedCarsNamesTestCase = {
-  id: "selected cars names",
-  query: `
-      query {
-        car(name:"Danielle") {
-           name 
-        }
-      }
-    `,
-  variables: {},
-
-  context: { sqlService: new MockSQLService() },
-
-  expected: {
-    data: {
-      car: [
-        {
-          name: "Krishna"
-        },
-        {
-          name: "Quan"
-        }
-      ]
-    }
-  },
-  spy: {
-    queryText:
-      "SELECT search::jsonb FROM VEHICLES.Car WHERE search->> 'name' = $1",
-    queryParam: ["Danielle"]
-  }
-};
-
 const selectedCarTestCase = {
   id: "selected cars",
   query: `
@@ -128,11 +96,7 @@ const upsertCarTestCase = {
 };
 
 describe("Test all car query cases", () => {
-  const cases = [
-    allCarsNamesTestCase,
-    selectedCarsNamesTestCase,
-    selectedCarTestCase
-  ];
+  const cases = [allCarsNamesTestCase, selectedCarTestCase];
 
   cases.forEach(obj => {
     const { id, query, variables, context, expected, spy } = obj;

@@ -7,9 +7,6 @@ export class Queries {
 
   public static readonly SEARCH_CARS = "SELECT search::jsonb FROM VEHICLES.Car";
 
-  public static readonly SEARCH_CAR_BY_NAME =
-    "SELECT search::jsonb FROM VEHICLES.Car WHERE search->> 'name' = $1";
-
   public static readonly SEARCH_CAR =
     "SELECT search::jsonb FROM VEHICLES.Car WHERE search @> $1";
 

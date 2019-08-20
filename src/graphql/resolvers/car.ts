@@ -10,22 +10,9 @@ import { Queries } from "../../core/constants/Queries";
 const resolveFunctions = {
   Query: {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
-      console.log("Args: " + JSON.stringify(args));
-      console.log("Object Keys: " + Object.keys(args));
-
-      if (Object.keys(args).length > 1) {
+      if (Object.keys(args).length > 0) {
         return context.sqlService
           .runQuery(Queries.SEARCH_CAR, [JSON.stringify(args)])
-          .then(res => {
-            const result = res.rows.map(row => row.search);
-            console.log("Filtered query result: " + result);
-
-            return result;
-          })
-          .catch(e => console.error(e.stack));
-      } else if (Object.keys(args).length > 0) {
-        return context.sqlService
-          .runQuery(Queries.SEARCH_CAR_BY_NAME, [args.name])
           .then(res => {
             const result = res.rows.map(row => row.search);
             console.log("Filtered query result: " + result);
