@@ -9,4 +9,8 @@ export class MockSQLService {
 
     return promise;
   }
+
+  public returnAnyString() {
+    return "{}";
+  }
 }
