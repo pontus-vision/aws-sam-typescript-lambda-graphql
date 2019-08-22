@@ -3,48 +3,47 @@ import * as crypto from "crypto";
 export class EncryptDecryptService {
   private static algorithm = "aes-256-cbc";
 
-  public getEncryptionKey(keyId: string): string {
+  public getEncryptionKey(keyId: string): Buffer {
     return crypto
       .createHash("sha256")
-      .update(String(keyId))
-      .digest("base64")
-      .substr(0, 32);
+      .update(String(keyId), "utf8")
+      .digest();
+    // .substr(0, 32);
   }
 
-  public getInitializationVector(keyId: string): string {
+  public getInitializationVector(keyId: string): Buffer {
     return crypto
-      .createHash("sha256")
-      .update(String(keyId))
-      .digest("base64")
-      .substr(0, 16);
+      .createHash("md5")
+      .update(String(keyId), "utf8")
+      .digest();
   }
 
-  public encrypt(iv: string, key: string, text: string): string {
+  public encrypt(iv: Buffer, key: Buffer, text: string): string {
     console.log(
       'Encrypting "%s" with key "%s" and iv "%s" using %s',
       text,
-      Buffer.from(key, "utf8"),
-      Buffer.from(iv, "hex"),
+      key,
+      iv,
       EncryptDecryptService.algorithm
     );
 
     const cipher = crypto.createCipheriv(
       EncryptDecryptService.algorithm,
-      Buffer.from(key, "utf8"),
+      key,
       iv
     );
     let encrypted = cipher.update(text);
     encrypted = Buffer.concat([encrypted, cipher.final()]);
 
-    return encrypted.toString("hex");
+    return encrypted.toString("base64");
   }
 
-  public decrypt(iv: string, key: string, encryptedValue: string) {
-    const encryptedText = Buffer.from(encryptedValue, "hex");
+  public decrypt(iv: Buffer, key: Buffer, encryptedValue: string) {
+    const encryptedText = Buffer.from(encryptedValue, "base64");
 
     const decipher = crypto.createDecipheriv(
       EncryptDecryptService.algorithm,
-      Buffer.from(key),
+      key,
       iv
     );
 
