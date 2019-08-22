@@ -63,3 +63,8 @@ typings/
 
 
 secrets
+
+Intellij
+*.iml
+*.ipr
+*.iws
