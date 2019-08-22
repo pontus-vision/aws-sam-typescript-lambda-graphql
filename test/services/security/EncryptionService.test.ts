@@ -9,18 +9,20 @@ describe("Test retrieve encryption key", () => {
   test(`retrieve token`, async () => {
     const result = encryptionService.getEncryptionKey("");
 
-    return expect(result).toEqual("K7gNU3sdo+OL0wNhqoVWhr3g6s1xYv72");
+    return expect(result).toEqual("47DEQpj8HBSa+/TImW+5JCeuQeRkm5NM");
   });
 });
 
 describe("Test encryption where the encryption key and initialization vector are provided by the service", () => {
   const textToEncrypt = '{"name":"Peter"}';
+  const keyId = "The quick brown fox jumps over the lazy dog";
+
   test(`encrypt`, async () => {
     const key = testParameters.context.encryptDecryptService.getEncryptionKey(
-      ""
+      keyId
     );
     const iv = testParameters.context.encryptDecryptService.getInitializationVector(
-      ""
+      keyId
     );
     const encryptedText = testParameters.context.encryptDecryptService.encrypt(
       iv,
@@ -30,20 +32,23 @@ describe("Test encryption where the encryption key and initialization vector are
     console.log("Encrypted text is: " + encryptedText);
 
     return expect(encryptedText).toEqual(
-      "3c178770b9d14d4d9966b084f44e3b76e30973f2f3253471037801b6563bacaf"
+      "ebad58ab5777e137db4d08446ad14db46b622fe6c1e63deb1a32b7d02388b403"
     );
   });
 });
 
 describe("Test decryption where the decryption key and initialization vector are provided by the service", () => {
   const textToDecrypt =
-    "3c178770b9d14d4d9966b084f44e3b76e30973f2f3253471037801b6563bacaf";
+    "ebad58ab5777e137db4d08446ad14db46b622fe6c1e63deb1a32b7d02388b403";
+
+  const keyId = "The quick brown fox jumps over the lazy dog";
+
   test(`decrypt`, async () => {
     const key = testParameters.context.encryptDecryptService.getEncryptionKey(
-      ""
+      keyId
     );
     const iv = testParameters.context.encryptDecryptService.getInitializationVector(
-      ""
+      keyId
     );
     const encryptedText = testParameters.context.encryptDecryptService.decrypt(
       iv,
