@@ -8,7 +8,6 @@ export class EncryptDecryptService {
       .createHash("sha256")
       .update(String(keyId), "utf8")
       .digest();
-    // .substr(0, 32);
   }
 
   public getInitializationVector(keyId: string): Buffer {
