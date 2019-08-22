@@ -129,7 +129,7 @@ Technologies
 │   └── secrets -- database password; this is not checked into this project, as it contains sensitive information; see step 3 above
 │       └── POSTGRES_PASSWORD_FILE
 ├── sam-template.yml -- AWS SAM template file.
-├── serverless.yml -- symbolic link to sam-template.yml
+├── serverless.yml -- Alternative template for the Serverless framework
 ├── src
 │   ├── aws-wrapper.ts -- instantiates the apollo server object used by the lambda entry point
 │   ├── context.ts -- class that is passed to the resolvers; this is initialized with injectable services (currently SQLService)
