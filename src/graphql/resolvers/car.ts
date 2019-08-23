@@ -53,28 +53,8 @@ const resolveFunctions = {
     ): Promise<Car> {
       const sqlService: SQLService = context.sqlService;
 
-      for (const objKey of Object.keys(args.car)) {
-        if (EncryptDirective.fields[objKey]) {
-          console.log(`AAAAAA`);
+      context.encryptDecryptService.recursiveEncrypt(args);
 
-          const initializationVector = context.encryptDecryptService.getInitializationVector(
-            "the cat jumped"
-          );
-          const encryptionKey = context.encryptDecryptService.getEncryptionKey(
-            "the cat jumped"
-          );
-
-          args.car[objKey] = context.encryptDecryptService.encrypt(
-            initializationVector,
-            encryptionKey,
-            args.car[objKey]
-          );
-
-          console.log(
-            `!!!!!!! encrypted field ${objKey} = ${args.car[objKey]}`
-          );
-        }
-      }
       // EncryptDirective.fields = {};
 
       const id = args.car._id;
