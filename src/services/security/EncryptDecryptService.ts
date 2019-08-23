@@ -49,7 +49,6 @@ export class EncryptDecryptService {
     );
 
     let decrypted = decipher.update(encryptedText);
-
     decrypted = Buffer.concat([decrypted, decipher.final()]);
 
     return decrypted.toString();

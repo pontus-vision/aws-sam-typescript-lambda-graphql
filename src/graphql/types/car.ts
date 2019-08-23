@@ -5,11 +5,15 @@ directive @sensitive on FIELD_DEFINITION
 type Car {
 _id: String!
  name : String @sensitive
- motor: String @sensitive
 }
 
 type Status {
  status : String
+}
+
+input CarInput {
+_id: String!
+ name : String
 }
 
 # the schema allows the following query:
@@ -18,7 +22,7 @@ type Query {
 }
 
 type Mutation {
-  updateCar(_id: String, name: String): Status 
+  updateCar(car: CarInput): Status 
 }
 
 `;
