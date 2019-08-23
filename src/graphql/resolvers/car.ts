@@ -6,10 +6,14 @@ import {
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
 import { Queries } from "../../core/constants/Queries";
+import {EncryptDirective} from "@src/directives/EncryptDirective";
 
 const resolveFunctions = {
   Query: {
-    car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
+    car(_, args: QueryCarArgs, context: IAppContext, info:any): Promise<Car[]> {
+  
+      console.log('Quering with info "%s"\n\n\n', JSON.stringify(info));
+  
       if (Object.keys(args).length > 0) {
         console.log('Quering with args "%s"', JSON.stringify(args));
 
@@ -23,6 +27,7 @@ const resolveFunctions = {
           })
           .catch(e => console.error(e.stack));
       } else {
+        
         return context.sqlService
           .runQuery(Queries.SEARCH_CARS, [])
           .then(res => {
@@ -44,10 +49,34 @@ const resolveFunctions = {
       info: any
     ): Promise<Car> {
       const sqlService: SQLService = context.sqlService;
-      const insert = JSON.stringify(args);
+   
+      for (const objKey of Object.keys(args)){
+        if (EncryptDirective.fields[objKey] ){
+  
+          console.log(`AAAAAA`);
+  
+          const initializationVector  = context.encryptDecryptService.getInitializationVector(
+              "the cat jumped"
+            );
+          const encryptionKey = context.encryptDecryptService.getEncryptionKey(
+              "the cat jumped"
+            );
+  
+  
+          args[objKey] = context.encryptDecryptService.encrypt(initializationVector, encryptionKey, args[objKey])
+  
+          console.log(`!!!!!!! encrypted field ${objKey} = ${args[objKey]}`);
+  
+  
+        }
+      }
+      // EncryptDirective.fields = {};
+  
       const id = args._id;
-      const name = args.name;
-
+  
+      const insert = JSON.stringify(args);
+  
+  
       console.log('Mutating with id "%s" and insert "%s"', id, insert);
 
       return sqlService

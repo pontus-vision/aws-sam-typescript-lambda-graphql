@@ -5,6 +5,7 @@ directive @sensitive on FIELD_DEFINITION
 type Car {
 _id: String!
  name : String @sensitive
+ motor: String @sensitive
 }
 
 type Status {
