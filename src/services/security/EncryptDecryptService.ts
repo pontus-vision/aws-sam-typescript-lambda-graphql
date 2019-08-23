@@ -1,5 +1,7 @@
 import * as crypto from "crypto";
+import { Injectable } from "injection-js";
 
+@Injectable()
 export class EncryptDecryptService {
   private static algorithm = "aes-256-cbc";
 
@@ -8,7 +10,6 @@ export class EncryptDecryptService {
       .createHash("sha256")
       .update(String(keyId), "utf8")
       .digest();
-    // .substr(0, 32);
   }
 
   public getInitializationVector(keyId: string): Buffer {

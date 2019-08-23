@@ -11,6 +11,8 @@ const resolveFunctions = {
   Query: {
     car(_, args: QueryCarArgs, context: IAppContext): Promise<Car[]> {
       if (Object.keys(args).length > 0) {
+        console.log('Quering with args "%s"', JSON.stringify(args));
+
         return context.sqlService
           .runQuery(Queries.SEARCH_CAR, [JSON.stringify(args)])
           .then(res => {
@@ -45,6 +47,8 @@ const resolveFunctions = {
       const insert = JSON.stringify(args);
       const id = args._id;
       const name = args.name;
+
+      console.log('Mutating with id "%s" and insert "%s"', id, insert);
 
       return sqlService
         .runQuery(Queries.MUTATE_CAR, [id, insert, id, insert])

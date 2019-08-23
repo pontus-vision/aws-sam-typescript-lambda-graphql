@@ -1,7 +1,10 @@
 const schema = `
+
+directive @sensitive on FIELD_DEFINITION
+
 type Car {
 _id: String!
- name : String
+ name : String @sensitive
 }
 
 type Status {
@@ -14,7 +17,7 @@ type Query {
 }
 
 type Mutation {
-  updateCar(_id: String, name: String): Status
+  updateCar(_id: String, name: String): Status 
 }
 
 `;
