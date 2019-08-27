@@ -4,10 +4,10 @@ import {
   QueryCarArgs
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
-import { SQLService } from "@src/services/sql/SQLService";
+import { SQLService } from "../../services/sql/SQLService";
 import { Queries } from "../../core/constants/Queries";
 import { Cryptography } from "../../core/constants/Cryptography";
-import { CryptographyDirective } from "@src/directives/CryptographyDirective";
+import { CryptographyDirective } from "../..//directives/CryptographyDirective";
 
 const resolveFunctions = {
   Query: {
@@ -26,9 +26,12 @@ const resolveFunctions = {
       if (Object.keys(args).length > 0) {
         console.log(`Quering with args ${JSON.stringify(args)}`);
 
+        context.cryptographyService.recursiveCrypto(args, Cryptography.ENCRYPT);
+
         return context.sqlService
           .runQuery(Queries.SEARCH_CAR, [JSON.stringify(args)])
           .then(res => {
+            console.log(`Database response is: ${JSON.stringify(res)}`);
             const result = context.cryptographyService.recursiveCrypto(
               res.rows.map(row => row.search),
               Cryptography.DECRYPT

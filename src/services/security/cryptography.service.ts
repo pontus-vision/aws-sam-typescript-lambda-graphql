@@ -1,7 +1,9 @@
 import * as crypto from "crypto";
 import { Injectable } from "injection-js";
-import { CryptographyDirective } from "@src/directives/CryptographyDirective";
-import { Cryptography } from "@src/core/constants/Cryptography";
+import { CryptographyDirective } from "../../directives/CryptographyDirective";
+import { Cryptography } from "../../core/constants/Cryptography";
+import "zone.js";
+import "reflect-metadata";
 
 @Injectable()
 export class CryptographyService {
@@ -14,7 +16,7 @@ export class CryptographyService {
       .digest();
   }
 
-  public getInitializationVector(keyId: string): Buffer {
+  public getInitVector(keyId: string): Buffer {
     return crypto
       .createHash("md5")
       .update(String(keyId), "utf8")
@@ -62,23 +64,13 @@ export class CryptographyService {
         this.recursiveCrypto(args[objKey], action);
       }
       if (CryptographyDirective.fields[objKey]) {
-        const initializationVector = this.getInitializationVector(
-          "the cat jumped"
-        );
+        const initVector = this.getInitVector("the cat jumped");
         const encryptionKey = this.getEncryptionKey("the cat jumped");
 
         if (action === Cryptography.DECRYPT) {
-          args[objKey] = this.decrypt(
-            initializationVector,
-            encryptionKey,
-            args[objKey]
-          );
+          args[objKey] = this.decrypt(initVector, encryptionKey, args[objKey]);
         } else if (action === Cryptography.ENCRYPT) {
-          args[objKey] = this.encrypt(
-            initializationVector,
-            encryptionKey,
-            args[objKey]
-          );
+          args[objKey] = this.encrypt(initVector, encryptionKey, args[objKey]);
         }
       }
     }

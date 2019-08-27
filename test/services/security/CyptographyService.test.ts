@@ -1,11 +1,11 @@
-import { CryptographyService } from "@src/services/security/cryptography.service.js";
+import { CryptographyService } from "../../../src/services/security/cryptography.service.js";
 
 const testParameters = {
-  context: { encryptDecryptService: new CryptographyService() }
+  context: { cryptographyService: new CryptographyService() }
 };
 
 describe("Test retrieve encryption key", () => {
-  const encryptionService = testParameters.context.encryptDecryptService;
+  const encryptionService = testParameters.context.cryptographyService;
   const keyId = "The quick brown fox jumps over the lazy dog";
   test(`retrieve token`, async () => {
     const result = encryptionService.getEncryptionKey(keyId);
@@ -20,13 +20,11 @@ describe("Test encryption where the encryption key and initialization vector are
   const keyId = "The quick brown fox jumps over the lazy dog";
 
   test(`encrypt`, async () => {
-    const key = testParameters.context.encryptDecryptService.getEncryptionKey(
+    const key = testParameters.context.cryptographyService.getEncryptionKey(
       keyId
     );
-    const iv = testParameters.context.encryptDecryptService.getInitializationVector(
-      keyId
-    );
-    const encryptedText = testParameters.context.encryptDecryptService.encrypt(
+    const iv = testParameters.context.cryptographyService.getInitVector(keyId);
+    const encryptedText = testParameters.context.cryptographyService.encrypt(
       iv,
       key,
       textToEncrypt
@@ -44,13 +42,11 @@ describe("Test decryption where the decryption key and initialization vector are
   const keyId = "The quick brown fox jumps over the lazy dog";
 
   test(`decrypt`, async () => {
-    const key = testParameters.context.encryptDecryptService.getEncryptionKey(
+    const key = testParameters.context.cryptographyService.getEncryptionKey(
       keyId
     );
-    const iv = testParameters.context.encryptDecryptService.getInitializationVector(
-      keyId
-    );
-    const decryptedText = testParameters.context.encryptDecryptService.decrypt(
+    const iv = testParameters.context.cryptographyService.getInitVector(keyId);
+    const decryptedText = testParameters.context.cryptographyService.decrypt(
       iv,
       key,
       textToDecrypt
