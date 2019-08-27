@@ -1,6 +1,7 @@
 import schema from "../src/graphql/schema/schema";
 import { graphql } from "graphql";
 import { MockSQLService } from "./services/sql/MockSQLService";
+import { CryptographyService } from "../src/services/security/cryptography.service";
 
 const allCarsNamesTestCase = {
   id: "all cars names",
@@ -13,16 +14,16 @@ const allCarsNamesTestCase = {
     `,
   variables: {},
 
-  context: { sqlService: new MockSQLService() },
+  context: {
+    cryptographyService: new CryptographyService(),
+    sqlService: new MockSQLService()
+  },
 
   expected: {
     data: {
       car: [
         {
-          name: "Krishna"
-        },
-        {
-          name: "Quan"
+          name: "David"
         }
       ]
     }
@@ -44,23 +45,23 @@ const selectedCarTestCase = {
     `,
   variables: {},
 
-  context: { sqlService: new MockSQLService() },
+  context: {
+    cryptographyService: new CryptographyService(),
+    sqlService: new MockSQLService()
+  },
 
   expected: {
     data: {
       car: [
         {
-          name: "Krishna"
-        },
-        {
-          name: "Quan"
+          name: "David"
         }
       ]
     }
   },
   spy: {
     queryText: "SELECT search::jsonb FROM VEHICLES.Car WHERE search @> $1",
-    queryParam: ['{"_id":"5","name":"Danielle"}']
+    queryParam: ['{"_id":"5","name":"naAifYUUhtjLQ1oXneqytw=="}']
   }
 };
 
@@ -68,7 +69,10 @@ const upsertCarTestCase = {
   id: "car test case",
   mutation: `
       mutation {
-        updateCar(_id: "5", name: "Quan") {
+         updateCar(car: {
+          name: "David"
+          _id: "12"
+        }) {
           status
         }
       }
@@ -76,7 +80,10 @@ const upsertCarTestCase = {
   variables: {},
 
   // injecting the mock sql service with canned responses
-  context: { sqlService: new MockSQLService() },
+  context: {
+    cryptographyService: new CryptographyService(),
+    sqlService: new MockSQLService()
+  },
 
   // expected result
   expected: {
@@ -87,10 +94,10 @@ const upsertCarTestCase = {
     queryText:
       "INSERT INTO VEHICLES.Car(_id, search) values ($1, $2) ON CONFLICT (_id) DO UPDATE set _id = $3, search =$4",
     queryParam: [
-      "5",
-      '{"_id":"5","name":"Quan"}',
-      "5",
-      '{"_id":"5","name":"Quan"}'
+      "12",
+      '{"_id":"12","name":"R+IaJf3zUDp3WmkgwkmV6Q=="}',
+      "12",
+      '{"_id":"12","name":"R+IaJf3zUDp3WmkgwkmV6Q=="}'
     ]
   }
 };
