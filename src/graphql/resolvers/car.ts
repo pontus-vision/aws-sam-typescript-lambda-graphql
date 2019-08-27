@@ -1,12 +1,13 @@
 import {
+  Car,
   MutationUpdateCarArgs,
-  QueryCarArgs,
-  Car
+  QueryCarArgs
 } from "../../interfaces/types";
 import { IAppContext } from "../../interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
 import { Queries } from "../../core/constants/Queries";
-import { EncryptDirective } from "@src/directives/EncryptDirective";
+import { Cryptography } from "../../core/constants/Cryptography";
+import { CryptographyDirective } from "@src/directives/CryptographyDirective";
 
 const resolveFunctions = {
   Query: {
@@ -16,16 +17,23 @@ const resolveFunctions = {
       context: IAppContext,
       info: any
     ): Promise<Car[]> {
-      console.log('Quering with info "%s"\n\n\n', JSON.stringify(info));
+      console.log(
+        `Fields to be decrypted are: ${JSON.stringify(
+          CryptographyDirective.fields
+        )}`
+      );
 
       if (Object.keys(args).length > 0) {
-        console.log('Quering with args "%s"', JSON.stringify(args));
+        console.log(`Quering with args ${JSON.stringify(args)}`);
 
         return context.sqlService
           .runQuery(Queries.SEARCH_CAR, [JSON.stringify(args)])
           .then(res => {
-            const result = res.rows.map(row => row.search);
-            console.log("Filtered query result: " + result);
+            const result = context.cryptographyService.recursiveCrypto(
+              res.rows.map(row => row.search),
+              Cryptography.DECRYPT
+            );
+            console.log(`Result is: ${JSON.stringify(result)}`);
 
             return result;
           })
@@ -34,8 +42,11 @@ const resolveFunctions = {
         return context.sqlService
           .runQuery(Queries.SEARCH_CARS, [])
           .then(res => {
-            const result = res.rows.map(row => row.search);
-            console.log(result);
+            const result = context.cryptographyService.recursiveCrypto(
+              res.rows.map(row => row.search),
+              Cryptography.DECRYPT
+            );
+            console.log(`Result is: ${JSON.stringify(result)}`);
 
             return result;
           })
@@ -53,9 +64,7 @@ const resolveFunctions = {
     ): Promise<Car> {
       const sqlService: SQLService = context.sqlService;
 
-      context.encryptDecryptService.recursiveEncrypt(args);
-
-      // EncryptDirective.fields = {};
+      context.cryptographyService.recursiveCrypto(args, Cryptography.ENCRYPT);
 
       const id = args.car._id;
 

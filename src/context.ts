@@ -1,11 +1,11 @@
 import { Injector } from "injection-js";
 import { IAppContext } from "@src/interfaces/IAppContext";
 import { SQLService } from "@src/services/sql/SQLService";
-import { EncryptDecryptService } from "@src/services/security/EncryptDecryptService";
+import { CryptographyService } from "@src/services/security/cryptography.service";
 
 export function getContext(injector: Injector): IAppContext {
   return {
-    encryptDecryptService: injector.get(EncryptDecryptService),
+    cryptographyService: injector.get(CryptographyService),
     sqlService: injector.get(SQLService)
   };
 }

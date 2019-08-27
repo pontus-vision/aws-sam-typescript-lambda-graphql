@@ -1,7 +1,7 @@
-import { EncryptDecryptService } from "../../../src/services/security/EncryptDecryptService.js";
+import { CryptographyService } from "@src/services/security/cryptography.service.js";
 
 const testParameters = {
-  context: { encryptDecryptService: new EncryptDecryptService() }
+  context: { encryptDecryptService: new CryptographyService() }
 };
 
 describe("Test retrieve encryption key", () => {

@@ -1,7 +1,7 @@
 import { SQLService } from "@src/services/sql/SQLService";
-import { EncryptDecryptService } from "@src/services/security/EncryptDecryptService";
+import { CryptographyService } from "@src/services/security/cryptography.service";
 
 export interface IAppContext {
   sqlService: SQLService;
-  encryptDecryptService: EncryptDecryptService;
+  cryptographyService: CryptographyService;
 }

@@ -1,9 +1,10 @@
 import * as crypto from "crypto";
 import { Injectable } from "injection-js";
-import { EncryptDirective } from "@src/directives/EncryptDirective";
+import { CryptographyDirective } from "@src/directives/CryptographyDirective";
+import { Cryptography } from "@src/core/constants/Cryptography";
 
 @Injectable()
-export class EncryptDecryptService {
+export class CryptographyService {
   private static algorithm = "aes-256-cbc";
 
   public getEncryptionKey(keyId: string): Buffer {
@@ -26,11 +27,11 @@ export class EncryptDecryptService {
       text,
       key,
       iv,
-      EncryptDecryptService.algorithm
+      CryptographyService.algorithm
     );
 
     const cipher = crypto.createCipheriv(
-      EncryptDecryptService.algorithm,
+      CryptographyService.algorithm,
       key,
       iv
     );
@@ -44,7 +45,7 @@ export class EncryptDecryptService {
     const encryptedText = Buffer.from(encryptedValue, "base64");
 
     const decipher = crypto.createDecipheriv(
-      EncryptDecryptService.algorithm,
+      CryptographyService.algorithm,
       key,
       iv
     );
@@ -55,24 +56,30 @@ export class EncryptDecryptService {
     return decrypted.toString();
   }
 
-  public recursiveEncrypt(args: any) {
+  public recursiveCrypto(args: any, action: string) {
     for (const objKey of Object.keys(args)) {
       if (typeof args[objKey] === "object") {
-        this.recursiveEncrypt(args[objKey]);
+        this.recursiveCrypto(args[objKey], action);
       }
-      if (EncryptDirective.fields[objKey]) {
+      if (CryptographyDirective.fields[objKey]) {
         const initializationVector = this.getInitializationVector(
           "the cat jumped"
         );
         const encryptionKey = this.getEncryptionKey("the cat jumped");
 
-        args[objKey] = this.encrypt(
-          initializationVector,
-          encryptionKey,
-          args[objKey]
-        );
-
-        console.log(`!!!!!!! encrypted field ${objKey} = ${args[objKey]}`);
+        if (action === Cryptography.DECRYPT) {
+          args[objKey] = this.decrypt(
+            initializationVector,
+            encryptionKey,
+            args[objKey]
+          );
+        } else if (action === Cryptography.ENCRYPT) {
+          args[objKey] = this.encrypt(
+            initializationVector,
+            encryptionKey,
+            args[objKey]
+          );
+        }
       }
     }
 

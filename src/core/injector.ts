@@ -7,13 +7,13 @@ import { Setting } from "./config/Setting";
 import { Logger } from "./logger/Logger";
 import { Injector, ReflectiveInjector } from "injection-js";
 import { SQLService } from "@src/services/sql/SQLService";
-import { EncryptDecryptService } from "@src/services/security/EncryptDecryptService";
+import { CryptographyService } from "@src/services/security/cryptography.service";
 
 const injector: Injector = ReflectiveInjector.resolveAndCreate([
   { provide: AbstractLogger, useClass: Logger },
   { provide: AbstractSetting, useClass: Setting },
   SQLService,
-  EncryptDecryptService,
+  CryptographyService,
   Server
 ]);
 
