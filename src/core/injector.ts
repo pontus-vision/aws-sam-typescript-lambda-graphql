@@ -8,12 +8,14 @@ import { Logger } from "./logger/Logger";
 import { Injector, ReflectiveInjector } from "injection-js";
 import { SQLService } from "@src/services/sql/SQLService";
 import { CryptographyService } from "@src/services/security/cryptography.service";
+import { CarService } from "@src/services/resolver/CarService";
 
 const injector: Injector = ReflectiveInjector.resolveAndCreate([
   { provide: AbstractLogger, useClass: Logger },
   { provide: AbstractSetting, useClass: Setting },
   SQLService,
   CryptographyService,
+  CarService,
   Server
 ]);
 

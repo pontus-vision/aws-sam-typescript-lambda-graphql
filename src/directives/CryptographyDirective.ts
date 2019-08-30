@@ -17,5 +17,10 @@ export class CryptographyDirective extends SchemaDirectiveVisitor {
   ): GraphQLField<any, any> | void | null {
     const { resolve = defaultFieldResolver } = field;
     CryptographyDirective.fields[field.name] = true;
+    console.log(
+      `Cryptography directives field is: ${JSON.stringify(
+        CryptographyDirective.fields
+      )}`
+    );
   }
 }

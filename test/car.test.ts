@@ -2,6 +2,7 @@ import schema from "../src/graphql/schema/schema";
 import { graphql } from "graphql";
 import { MockSQLService } from "./services/sql/MockSQLService";
 import { CryptographyService } from "../src/services/security/cryptography.service";
+import { CarService } from "../src/services/resolver/CarService";
 
 const allCarsNamesTestCase = {
   id: "all cars names",
@@ -16,7 +17,8 @@ const allCarsNamesTestCase = {
 
   context: {
     cryptographyService: new CryptographyService(),
-    sqlService: new MockSQLService()
+    sqlService: new MockSQLService(),
+    carService: new CarService()
   },
 
   expected: {
@@ -47,7 +49,8 @@ const selectedCarTestCase = {
 
   context: {
     cryptographyService: new CryptographyService(),
-    sqlService: new MockSQLService()
+    sqlService: new MockSQLService(),
+    carService: new CarService()
   },
 
   expected: {
@@ -82,7 +85,8 @@ const upsertCarTestCase = {
   // injecting the mock sql service with canned responses
   context: {
     cryptographyService: new CryptographyService(),
-    sqlService: new MockSQLService()
+    sqlService: new MockSQLService(),
+    carService: new CarService()
   },
 
   // expected result
