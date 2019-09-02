@@ -51,7 +51,7 @@ After completing this Guide/Documentation you will:
 ```
 <your pg password>
 ```
-+ Docker exec and enter the password you stored in POSTGRES_PASSWORD_FILE; this will mount the file under /run/secrets/POSTGRES_PASSWORD_FILE in the container
++ Docker exec and enter the password you stored in POSTGRES_PASSWORD_FILE; this will mount the file under /run/secrets/POSTGRES_PASSWORD_FILE in the container e.g. e.g. `docker exec -it postgres psql -U postgres -W` 
 
 ## Step 4: Run Trains and Cars Application to Verify your setup
 + Navigate to parent directory of cloned project
