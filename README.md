@@ -171,3 +171,134 @@ Technologies
 └── tslint.json -- on git commit, this enforces that the code conforms to pure typescript syntax. 
 ```
 
+
+# Cryptography
+
+## Aim
+After completing this section you will:
+
++ understand how we encrypt/decrypt queries and mutations calls from graphql via lambda
++ be able to add encryption functionality to specific fields and extend the cryptography functionality of the system.
+
+
+## Technology Used
++ Schema Directives. https://www.apollographql.com/docs/graphql-tools/schema-directives/
++ NodeJS Crypto Module https://nodejs.org/api/crypto.html
+
+## How it is implementation (High Level)
++ Make specific field candidates for encryption/decryption by annotating them with @sensitive (Annotation driven approach achieved through the use of Schema directives.)
++ Call makeExecutableSchema with the @sensitive directive and its handlers (You can add multiple directive and handlers.)
++ In the schema directive handler, override the visitFieldDefinition and capture annotated fields
++ In the resolver, for queries, encrypt the annotated fields on the argument passed, retrieve the data and decrypt the values before passing back to graphql
++ In the resolver, for mutations, encrypt the annotated fields and store the encrypted form into the database.
++ An Injectable Cryptography service is used to perform encryption and decryption.
+
+
+## Step 1: Make specific field candidates for encryption/decryption by annotating them with @sensitive
+
+```
+directive @sensitive on FIELD_DEFINITION
+
+type Car {
+_id: String!
+ name : String @sensitive
+}
+
+```
+
+## Step 2: Call makeExecutableSchema with the @sensitive directive
+```
+schema = makeExecutableSchema({
+  typeDefs: allTypes,
+  schemaDirectives: {
+    sensitive: CryptographyDirective
+  },
+  resolvers: allResolvers
+});
+```
+
+## Step 3: Capture Annotated fields in the Schema Directive Handler
+```
+export class CryptographyDirective extends SchemaDirectiveVisitor {
+  public static fields: any = {};
+
+  public visitFieldDefinition(
+    field: GraphQLField<any, any>,
+    details: {
+      objectType: GraphQLObjectType | GraphQLInterfaceType;
+    }
+  ): GraphQLField<any, any> | void | null {
+    const { resolve = defaultFieldResolver } = field;
+    CryptographyDirective.fields[field.name] = true;
+  }
+}
+```
+
+## Step 4: Resolver - Crytography within queries
+```
+        console.log(`Quering with args ${JSON.stringify(args)}`);
+
+        context.cryptographyService.recursiveCrypto(args, Cryptography.ENCRYPT);
+
+        return context.sqlService
+          .runQuery(Queries.SEARCH_CAR, [JSON.stringify(args)])
+          .then(res => {
+            console.log(`Database response is: ${JSON.stringify(res)}`);
+            const result = context.cryptographyService.recursiveCrypto(
+              res.rows.map(row => row.search),
+              Cryptography.DECRYPT
+            );
+            console.log(`Result is: ${JSON.stringify(result)}`);
+
+            return result;
+          })
+          .catch(e => console.error(e.stack));
+```
+
+## Step 5: Resolver - Cryptography within Mutations
+```
+      const sqlService: SQLService = context.sqlService;
+
+      context.cryptographyService.recursiveCrypto(args, Cryptography.ENCRYPT);
+
+      const id = args.car._id;
+
+      const insert = JSON.stringify(args.car);
+
+      console.log('Mutating with id "%s" and insert "%s"', id, insert);
+
+      return sqlService
+        .runQuery(Queries.MUTATE_CAR, [id, insert, id, insert])
+        .then(res => {
+          const response = JSON.parse('{"status": " 200 "}');
+
+          return response;
+        })
+        .catch(e => console.error(e.stack));
+```
+
+## Step 6: Testing with Jest
++ Jest is already added as a dev dependency in package.json, Look at https://jestjs.io/docs/en/getting-started for more information setting up jest.
++ To execute test, run "npm run test" from the command line.
++ GraphQL Queries and Mutations and mutation tests have been amended to validate encryption of items being stored to the database and decryption of items leaving the database before they are presented to the user.
++ Unit Test have been added for the Cryptography Service for generating cipher angorithm, encryption and decryption using the nodejs primary crypto module.
+
+
+## Cryptography Service
+
+Encryption/Decryption Ciphers are created using the aes-256-cbc. This stack overflow entry explains it well. https://stackoverflow.com/questions/33121619/is-there-any-difference-between-aes-128-cbc-and-aes-128-encryption
+
+To Encrypt
+
++ Within the NodeJS Crypto module, we generate the cipher with crypto.createCipheriv(algorithm, key, iv[, options]). For more information, see https://nodejs.org/api/crypto.html#crypto_crypto_createcipheriv_algorithm_key_iv_options
++ Then call cipher.update() passing it the data we are encrypting, for more information, see https://nodejs.org/api/crypto.html#crypto_cipher_update_data_inputencoding_outputencoding
+
+ 
+To Decrypt
+
++ Within the NodeJS Crypto module, we generate the decipher with crypto.createDecipheriv(algorithm, key, iv[, options]). For more information, see https://nodejs.org/api/crypto.html#crypto_crypto_createdecipheriv_algorithm_key_iv_options
++ Then call decipher.update(), passing it the data we are decrypting, for more information, see https://nodejs.org/api/crypto.html#crypto_decipher_update_data_inputencoding_outputencoding
+
+
+
+
