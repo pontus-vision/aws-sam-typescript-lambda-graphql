@@ -4,6 +4,12 @@ execution:
   ramp-up: 0s
   scenario: addData
 
+  concurrency: 5
+  hold-for: 20s
+  ramp-up: 5s
+  scenario: receiveData
+  delay: 10s
+
 
 reporting:
 - module: passfail
@@ -25,7 +31,7 @@ scenarios:
     #data-sources:
     #- cars.csv
     requests:
-    - label: viewcar
+    - label: addcar
       method: POST
       url: http://localhost:4000/graphql
       headers:
@@ -33,7 +39,24 @@ scenarios:
         Content-Type: application/json
         Accept: application/json
       #DNT: 1
-      body-file: test1.json
+      body-file: addcar.json
+
+  scenarios:
+    receiveData:
+      #data-sources:
+      #- cars.csv
+      requests:
+      - label: getcar
+        method: POST
+        url: http://localhost:4000/graphql
+        headers:
+        #  Authorization: Bearer ${ACCESS_TOKEN}
+          Content-Type: application/json
+          Accept: application/json
+        #DNT: 1
+        body-file: test1.json
+
+
 
   #  criteria:
   #    - p90>${PERF_TEST_P90_THRESHOLD} for 10s
@@ -53,3 +76,4 @@ scenarios:
       then:
         - action: stop-now
           target: all-threads
+  
