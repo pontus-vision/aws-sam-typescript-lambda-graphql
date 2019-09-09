@@ -37,7 +37,7 @@ RUN bzt -o settings.default-executor=jmeter -o execution.scenario.requests.0=htt
 VOLUME ["/bzt-config"]
 VOLUME ["/bzt"]
 
-COPY test1.json /bzt-config/
+COPY test1.json /bzt/bzt_artifacts/test1.json
 COPY cars_post.yml /bzt-config/
 
 
