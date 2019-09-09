@@ -16,10 +16,11 @@ export class SQLService {
   }
 
   private static init: boolean = false;
-  private static pool: any;
+  private static pool: Pool;
   constructor(private logger: AbstractLogger) {
     if (!SQLService.init) {
       SQLService.initialize();
+      SQLService.init = true
     }
   }
 

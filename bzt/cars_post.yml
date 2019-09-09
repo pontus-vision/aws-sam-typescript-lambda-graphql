@@ -1,0 +1,55 @@
+execution:
+- concurrency: 1
+  hold-for: 10s
+  ramp-up: 0s
+  scenario: addData
+
+
+reporting:
+- module: passfail
+  criteria:
+  - fail of viewcar>0%, stop as failed
+  - fail of receive>0%, stop as failed
+
+- module: final-stats
+  summary: true  # overall samples count and percent of failures
+  percentiles: true  # display average times and percentiles
+  summary-labels: true # provides list of sample labels, status, percentage of completed, avg time and errors
+  failed-labels: true  # provides list of sample labels with failures
+  test-duration: true  # provides test duration
+  dump-csv: /tmp/test-res.csv
+
+
+scenarios:
+  addData:
+    #data-sources:
+    #- cars.csv
+    requests:
+    - label: viewcar
+      method: POST
+      url: http://localhost:4000/graphql
+      headers:
+      #  Authorization: Bearer ${ACCESS_TOKEN}
+        Content-Type: application/json
+        Accept: application/json
+      #DNT: 1
+      body-file: test1.json
+
+  #  criteria:
+  #    - p90>${PERF_TEST_P90_THRESHOLD} for 10s
+  #    - avg-rt>${PERF_TEST_AVG_THRESHOLD} for 10s
+      assert-jsonpath:
+      - jsonpath: $.data.car[0]._id
+        validate: true
+        expected-value: 4
+
+      extract-jsonpath:
+        car_id: $.data.car[0]._id
+        car_name: $.data.car[0].name
+
+    # branch on `status_code` value
+
+    - if: '"${car_id}" != "2"'
+      then:
+        - action: stop-now
+          target: all-threads
