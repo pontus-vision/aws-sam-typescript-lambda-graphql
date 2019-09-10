@@ -299,6 +299,16 @@ To Decrypt
 + Within the NodeJS Crypto module, we generate the decipher with crypto.createDecipheriv(algorithm, key, iv[, options]). For more information, see https://nodejs.org/api/crypto.html#crypto_crypto_createdecipheriv_algorithm_key_iv_options
 + Then call decipher.update(), passing it the data we are decrypting, for more information, see https://nodejs.org/api/crypto.html#crypto_decipher_update_data_inputencoding_outputencoding
 
+## Steps to run the blazemeter Taurus end to end test 
+
+To run the test ./docker_run.sh
+
+00_mutation.yml file contains taurus information to post an insertion into car table.
+01_query.yml file contains taurus information to get the inserted record values.
+
+test1.json file contains payload request for mutation.
+addcar.json file contains payload request for query.
+
 
 
 
