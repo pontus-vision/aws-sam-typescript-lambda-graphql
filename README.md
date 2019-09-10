@@ -116,6 +116,16 @@ Technologies
 ```
 ├── LICENSE -- License file
 ├── README.md -- This file
+├── bzt -- Blazemeter Taurus end to end tests
+│   ├── README.md -- This file
+│   ├── docker_run.sh  -- this file has the configuration to build docker and run the taurus test. 
+│   ├── 00_mutation.yml -- this file contains taurus post request script.
+│   ├── 01_query.yml -- this file  contains taurus get request script
+│   ├── addcar.json  -- file contains payload request for mutation.
+│   ├── test1.json  -- file contains payload request for query.
+│   ├── 90-artifacts-dir.json -- file contains setting for artifacts-dir directory.
+│   ├── 99-zinstallID.json -- contains the docker installing id
+│   └── 90-no-console.json -- file contains enabling the console log settings.
 ├── codegen.yml  -- this file has the configuration to create the auto-generated types.d.ts file. 
 ├── jest.config.js -- configuration file that defines the behaviour of the Jest Unit Tests.
 ├── lambda.js  -- entry point for the AWS Lambda
@@ -170,6 +180,140 @@ Technologies
 ├── tsconfig.json -- config file for typescript
 └── tslint.json -- on git commit, this enforces that the code conforms to pure typescript syntax. 
 ```
+
+# Testing
+## Unit Testing with Jest
++ Jest is already added as a dev dependency in package.json, Look at https://jestjs.io/docs/en/getting-started for more information setting up jest.
++ To execute test, run "npm run test" from the command line.
++ GraphQL Queries and Mutations and mutation tests have been amended to validate encryption of items being stored to the database and decryption of items leaving the database before they are presented to the user.
++ Unit Test have been added for the Cryptography Service for generating cipher angorithm, encryption and decryption using the nodejs primary crypto module.
+
+## Integration Testing with Blazemeter Taurus
+Blazemeter Taurus is a test harness that enables functional and non-functional tests to be run; the samples included here only send one mutation, and wait for one response back.  When running this locally, blazemeter will run in a docker container, with a network set to 'host', so it can contact the SAM framework lambda.
+
+To run the tests, run the following:
+```
+cd bzt 
+./docker_run.sh
+```
+Here is a sample result:
+```
+Successfully tagged carsbzt:latest
+09:58:13 INFO: Taurus CLI Tool v1.13.8
+09:58:13 INFO: Starting with configs: ['/bzt-config/00_mutation.yml']
+09:58:13 INFO: Configuring...
+09:58:14 INFO: Artifacts dir: /bzt/bzt_artifacts
+09:58:14 INFO: Preparing...
+09:58:23 INFO: Starting...
+09:58:23 INFO: Waiting for results...
+09:58:51 WARNING: Please wait for graceful shutdown...
+09:58:51 INFO: Shutting down...
+09:58:51 INFO: Post-processing...
+09:58:51 INFO: Test duration: 0:00:28
+09:58:51 INFO: Samples count: 1, 0.00% failures
+09:58:51 INFO: Average times: total 21.402, latency 21.402, connect 0.063
+09:58:51 INFO: Percentiles:
+┌───────────────┬───────────────┐
+│ Percentile, % │ Resp. Time, s │
+├───────────────┼───────────────┤
+│           0.0 │        21.392 │
+│          50.0 │        21.392 │
+│          90.0 │        21.392 │
+│          95.0 │        21.392 │
+│          99.0 │        21.392 │
+│          99.9 │        21.392 │
+│         100.0 │        21.392 │
+└───────────────┴───────────────┘
+09:58:51 INFO: Request label stats:
+┌────────┬────────┬─────────┬────────┬───────┐
+│ label  │ status │    succ │ avg_rt │ error │
+├────────┼────────┼─────────┼────────┼───────┤
+│ addCar │   OK   │ 100.00% │ 21.402 │       │
+└────────┴────────┴─────────┴────────┴───────┘
+09:58:51 INFO: Test duration: 0:00:28
+09:58:51 INFO: Samples count: 1, 0.00% failures
+09:58:51 INFO: Average times: total 21.402, latency 21.402, connect 0.063
+09:58:51 INFO: Percentiles:
+┌───────────────┬───────────────┐
+│ Percentile, % │ Resp. Time, s │
+├───────────────┼───────────────┤
+│           0.0 │        21.392 │
+│          50.0 │        21.392 │
+│          90.0 │        21.392 │
+│          95.0 │        21.392 │
+│          99.0 │        21.392 │
+│          99.9 │        21.392 │
+│         100.0 │        21.392 │
+└───────────────┴───────────────┘
+09:58:51 INFO: Request label stats:
+┌────────┬────────┬─────────┬────────┬───────┐
+│ label  │ status │    succ │ avg_rt │ error │
+├────────┼────────┼─────────┼────────┼───────┤
+│ addCar │   OK   │ 100.00% │ 21.402 │       │
+└────────┴────────┴─────────┴────────┴───────┘
+09:58:51 INFO: Dumping final status as CSV: /tmp/test-res.csv
+09:58:51 INFO: Artifacts dir: /bzt/bzt_artifacts
+09:58:51 INFO: Done performing with code: 0
+09:58:51 INFO: Taurus CLI Tool v1.13.8
+09:58:51 INFO: Starting with configs: ['/bzt-config/01_query.yml']
+09:58:51 INFO: Configuring...
+09:58:51 INFO: Artifacts dir: /bzt/bzt_artifacts
+09:58:52 INFO: Preparing...
+09:59:01 INFO: Starting...
+09:59:01 INFO: Waiting for results...
+
+
+
+
+
+09:59:54 WARNING: Please wait for graceful shutdown...
+09:59:54 INFO: Shutting down...
+09:59:54 INFO: Post-processing...
+09:59:54 INFO: Test duration: 0:00:53
+09:59:54 INFO: Samples count: 1, 0.00% failures
+09:59:54 INFO: Average times: total 19.076, latency 19.076, connect 0.033
+09:59:54 INFO: Percentiles:
+┌───────────────┬───────────────┐
+│ Percentile, % │ Resp. Time, s │
+├───────────────┼───────────────┤
+│           0.0 │        19.072 │
+│          50.0 │        19.072 │
+│          90.0 │        19.072 │
+│          95.0 │        19.072 │
+│          99.0 │        19.072 │
+│          99.9 │        19.072 │
+│         100.0 │        19.072 │
+└───────────────┴───────────────┘
+09:59:54 INFO: Request label stats:
+┌────────┬────────┬─────────┬────────┬───────┐
+│ label  │ status │    succ │ avg_rt │ error │
+├────────┼────────┼─────────┼────────┼───────┤
+│ getcar │   OK   │ 100.00% │ 19.076 │       │
+└────────┴────────┴─────────┴────────┴───────┘
+09:59:54 INFO: Test duration: 0:00:53
+09:59:54 INFO: Samples count: 1, 0.00% failures
+09:59:54 INFO: Average times: total 19.076, latency 19.076, connect 0.033
+09:59:54 INFO: Percentiles:
+┌───────────────┬───────────────┐
+│ Percentile, % │ Resp. Time, s │
+├───────────────┼───────────────┤
+│           0.0 │        19.072 │
+│          50.0 │        19.072 │
+│          90.0 │        19.072 │
+│          95.0 │        19.072 │
+│          99.0 │        19.072 │
+│          99.9 │        19.072 │
+│         100.0 │        19.072 │
+└───────────────┴───────────────┘
+09:59:54 INFO: Request label stats:
+┌────────┬────────┬─────────┬────────┬───────┐
+│ label  │ status │    succ │ avg_rt │ error │
+├────────┼────────┼─────────┼────────┼───────┤
+│ getcar │   OK   │ 100.00% │ 19.076 │       │
+└────────┴────────┴─────────┴────────┴───────┘
+
+```
+
 
 
 # Cryptography
@@ -277,11 +421,6 @@ export class CryptographyDirective extends SchemaDirectiveVisitor {
         .catch(e => console.error(e.stack));
 ```
 
-## Step 6: Testing with Jest
-+ Jest is already added as a dev dependency in package.json, Look at https://jestjs.io/docs/en/getting-started for more information setting up jest.
-+ To execute test, run "npm run test" from the command line.
-+ GraphQL Queries and Mutations and mutation tests have been amended to validate encryption of items being stored to the database and decryption of items leaving the database before they are presented to the user.
-+ Unit Test have been added for the Cryptography Service for generating cipher angorithm, encryption and decryption using the nodejs primary crypto module.
 
 
 ## Cryptography Service
@@ -299,22 +438,6 @@ To Decrypt
 + Within the NodeJS Crypto module, we generate the decipher with crypto.createDecipheriv(algorithm, key, iv[, options]). For more information, see https://nodejs.org/api/crypto.html#crypto_crypto_createdecipheriv_algorithm_key_iv_options
 + Then call decipher.update(), passing it the data we are decrypting, for more information, see https://nodejs.org/api/crypto.html#crypto_decipher_update_data_inputencoding_outputencoding
 
-## Steps to run the blazemeter Taurus end to end test 
-
-## folder  Structure for bzt 
-bzt
-├── README.md -- This file
-├── docker_run.sh  -- this file has the configuration to build docker and run the taurus test. 
-├── 00_mutation.yml -- this file contains taurus post request script.
-├── 01_query.yml -- this file  contains taurus get request script
-├── addcar.json  -- file contains payload request for mutation.
-├── test1.json  -- file contains payload request for query.
-├── 90-artifacts-dir.json -- file contains setting for artifacts-dir directory.
-├── 99-zinstallID.json -- contains the docker installing id
-├── 90-no-console.json -- file contains enabling the console log settings.
-
-
-To run the test ./docker_run.sh
 
 
 
