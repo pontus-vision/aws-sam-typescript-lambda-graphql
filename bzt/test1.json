@@ -1,1 +1,1 @@
-{"operationName":"singlecarview","variables":{},"query":"query singlecarview {\n  car(name: \"jag23\") {\n    _id\n    name\n  }\n}\n"}
+{"operationName":"singlecarview","variables":{},"query":"query singlecarview {\n  car(name: \"jag234\") {\n    _id\n    name\n  }\n}\n"}

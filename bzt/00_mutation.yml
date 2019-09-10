@@ -1,0 +1,36 @@
+execution:
+- concurrency: 1
+  hold-for: 10s
+  ramp-up: 0s
+  scenario: addCar
+
+
+reporting:
+- module: passfail
+  criteria:
+  - fail of viewcar>0%, stop as failed
+  - fail of receive>0%, stop as failed
+
+- module: final-stats
+  summary: true  # overall samples count and percent of failures
+  percentiles: true  # display average times and percentiles
+  summary-labels: true # provides list of sample labels, status, percentage of completed, avg time and errors
+  failed-labels: true  # provides list of sample labels with failures
+  test-duration: true  # provides test duration
+  dump-csv: /tmp/test-res.csv
+
+
+scenarios:
+  addCar:
+    #data-sources:
+    #- cars.csv
+    requests:
+    - label: addCar
+      method: POST
+      url: http://localhost:4000/graphql
+      headers:
+      #  Authorization: Bearer ${ACCESS_TOKEN}
+        Content-Type: application/json
+        Accept: application/json
+      #DNT: 1
+      body-file: addcar.json

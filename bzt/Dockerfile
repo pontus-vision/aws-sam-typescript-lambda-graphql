@@ -39,7 +39,8 @@ VOLUME ["/bzt"]
 
 COPY addcar.json /bzt/bzt_artifacts/
 COPY test1.json /bzt/bzt_artifacts/
-COPY cars_post.yml /bzt-config/
+COPY 01_query.yml /bzt-config/
+COPY 00_mutation.yml /bzt-config/
 
 
 
