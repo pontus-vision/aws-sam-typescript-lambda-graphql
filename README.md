@@ -316,11 +316,6 @@ bzt
 
 To run the test ./docker_run.sh
 
-00_mutation.yml file contains taurus information to post an insertion into car table.
-01_query.yml file contains taurus information to get the inserted record values.
-
-test1.json file contains payload request for mutation.
-addcar.json file contains payload request for query.
 
 
 
