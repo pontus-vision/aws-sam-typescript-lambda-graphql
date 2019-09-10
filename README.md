@@ -301,6 +301,19 @@ To Decrypt
 
 ## Steps to run the blazemeter Taurus end to end test 
 
+## folder  Structure for bzt 
+bzt
+├── README.md -- This file
+├── docker_run.sh  -- this file has the configuration to build docker and run the taurus test. 
+├── 00_mutation.yml -- this file contains taurus post request script.
+├── 01_query.yml -- this file  contains taurus get request script
+├── addcar.json  -- file contains payload request for mutation.
+├── test1.json  -- file contains payload request for query.
+├── 90-artifacts-dir.json -- file contains setting for artifacts-dir directory.
+├── 99-zinstallID.json -- contains the docker installing id
+├── 90-no-console.json -- file contains enabling the console log settings.
+
+
 To run the test ./docker_run.sh
 
 00_mutation.yml file contains taurus information to post an insertion into car table.
