@@ -44,6 +44,5 @@ COPY 00_mutation.yml /bzt-config/
 
 
 
-CMD bzt -l bzt.log /bzt-config/00_mutation.yml &&
-    bzt -l bzt.log /bzt-config/01_query.yml
+CMD bzt -l bzt.log /bzt-config/00_mutation.yml && bzt -l bzt.log /bzt-config/01_query.yml
 
