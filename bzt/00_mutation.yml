@@ -1,9 +1,9 @@
 execution:
-- concurrency: 1
+- concurrency: 2
+  iterations: 5
   hold-for: 10s
-  ramp-up: 0s
+  ramp-up: 2s
   scenario: addCar
-
 
 reporting:
 - module: passfail
@@ -22,8 +22,8 @@ reporting:
 
 scenarios:
   addCar:
-    #data-sources:
-    #- cars.csv
+    data-sources:
+    - cars.csv
     requests:
     - label: addCar
       method: POST
@@ -33,4 +33,8 @@ scenarios:
         Content-Type: application/json
         Accept: application/json
       #DNT: 1
-      body-file: addcar.json
+      #body-file: addcar.json
+      body: |
+        {"operationName":null,"variables":{},"query":"mutation {\n  updateCar(car: {name: \"${name}\", _id: \"${id}\"}) {\n    status\n  }\n}\n"}
+      #body-file: addcar1.json
+      #body-file: addcar2.json

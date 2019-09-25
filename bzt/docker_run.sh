@@ -6,4 +6,4 @@ cd $DIR/
 
 docker build -t carsbzt .
 
-docker run --network="host" -it carsbzt
+docker run --network=host -it carsbzt
