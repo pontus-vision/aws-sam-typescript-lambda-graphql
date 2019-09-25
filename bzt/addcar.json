@@ -1,2 +1,1 @@
-{"operationName":null,"variables":{},"query":"mutation {\n  updateCar(car: {name: \"jag234\", _id: \"4\"}) {\n    status\n  }\n}\n"}
-
+{"operationName":null,"variables":{},"query":"mutation {\n  updateCar(car: {name: \"${name}\", _id: \"${id}\"}) {\n    status\n  }\n}\n"}
