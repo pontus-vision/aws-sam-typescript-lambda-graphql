@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import { Injectable } from "injection-js";
-import { CryptographyDirective } from "../../directives/CryptographyDirective";
-import { Cryptography } from "../../core/constants/Cryptography";
+import { CryptographyDirective } from "@src/directives/CryptographyDirective";
+import { Cryptography } from "@src/core/constants/Cryptography";
 import "zone.js";
 import "reflect-metadata";
 

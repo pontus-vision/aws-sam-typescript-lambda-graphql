@@ -3,9 +3,9 @@ import {
   MutationUpdateTrainArgs,
   QueryTrainArgs,
   Train
-} from "../../interfaces/types";
-import { IAppContext } from "../../interfaces/IAppContext";
-import { Queries } from "../../core/constants/Queries";
+} from "@src/interfaces/types";
+import { IAppContext } from "@src/interfaces/IAppContext";
+import { Queries } from "@src/core/constants/Queries";
 
 const resolveFunctions = {
   Query: {

@@ -1,7 +1,7 @@
-import schema from "../src/graphql/schema/schema";
+import schema from "@src/graphql/schema/schema";
 import { graphql } from "graphql";
 import { MockSQLService } from "./services/sql/MockSQLService";
-import { CryptographyService } from "../src/services/security/cryptography.service";
+import { CryptographyService } from "@src/services/security/cryptography.service";
 
 const allCarsNamesTestCase = {
   id: "all cars names",

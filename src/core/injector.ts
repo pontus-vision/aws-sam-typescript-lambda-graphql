@@ -1,6 +1,6 @@
 import "zone.js";
 import "reflect-metadata";
-import { Server } from "../server";
+import { Server } from "@src/server";
 import { AbstractLogger } from "./logger/AbstractLogger";
 import { AbstractSetting } from "./config/AbstractSetting";
 import { Setting } from "./config/Setting";

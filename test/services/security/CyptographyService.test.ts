@@ -1,4 +1,4 @@
-import { CryptographyService } from "../../../src/services/security/cryptography.service.js";
+import { CryptographyService } from "@src/services/security/cryptography.service";
 
 const testParameters = {
   context: { cryptographyService: new CryptographyService() }

@@ -2,7 +2,7 @@ import * as path from "path";
 import { makeExecutableSchema } from "graphql-tools";
 import { fileLoader, mergeTypes, mergeResolvers } from "merge-graphql-schemas";
 import { GraphQLSchema } from "graphql";
-import { CryptographyDirective } from "../../directives/CryptographyDirective";
+import { CryptographyDirective } from "@src/directives/CryptographyDirective";
 
 const typesArray = fileLoader(path.join(__dirname, "../types"), {
   recursive: true
