@@ -79,7 +79,7 @@
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
     "serverless-dotenv-plugin": "^2.1.1",
-    "serverless-offline": "^5.3.3",
+    "serverless-offline": "^12.0.3",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.1.0",
     "tslint": "5.18.0",
